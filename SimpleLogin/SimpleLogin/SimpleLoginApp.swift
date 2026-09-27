@@ -84,7 +84,10 @@ struct SimpleLoginApp: App {
             }
             .tint(.brand)
             .accentColor(.brand)
-            .onAppear { appearance.apply() }
+            .onAppear {
+                appearance.apply()
+                router.consumePendingQuickAction()
+            }
             .onOpenURL { url in
                 router.handle(url: url)
             }
@@ -92,8 +95,11 @@ struct SimpleLoginApp: App {
                 router.handle(spotlightActivity: userActivity)
             }
         }
-        .onChange(of: scenePhase) {
+        .onChange(of: scenePhase) { _, newPhase in
             appearance.apply()
+            if newPhase == .active {
+                router.consumePendingQuickAction()
+            }
         }
         .onChange(of: appearance) { _, newValue in
             newValue.apply()

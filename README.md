@@ -17,6 +17,8 @@ Protect your inbox with email aliases. RelayEmail is based on the open source
   leaves the device)
 - Swipe actions, context menus, pull to refresh
 - **Siri & Shortcuts**: "Create a random alias with RelayEmail" works out of the box, and can be assigned to the Action button
+- **Widgets & Controls**: Home Screen widget (small/medium), Lock Screen widgets and a Control Center /
+  Action button control to create a random alias in one tap (`RelayEmailWidgets` extension)
 - **Home Screen quick actions**: long press the app icon to create a random alias, a custom alias, or search
 - **Spotlight**: search your aliases from the Home Screen and tap a result to copy it
 - **Deep links**: `relayemail://create`, `relayemail://random`, `relayemail://search`, `relayemail://aliases`
@@ -29,7 +31,8 @@ Protect your inbox with email aliases. RelayEmail is based on the open source
 - "Log in with Proton" is disabled by default: see `protonLoginEnabled` in `Utils/FeatureFlags.swift`
 - Bundle identifiers, the App Group (`group.io.simplelogin.ios`), the Keychain access group and the in-app purchase
   product IDs still use the original SimpleLogin values. Replace them with identifiers registered to your Apple
-  Developer team before shipping.
+  Developer team before shipping. The widget extension uses `io.simplelogin.ios-app.widgets` and needs the same
+  App Group.
 
 ## License
 Copyright (c) 2019-2022 SimpleLogin

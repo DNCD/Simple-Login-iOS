@@ -76,6 +76,23 @@ final class AppRouter: ObservableObject {
         return true
     }
 
+    /// Picks up a quick action requested by a widget or a Control Center button
+    func consumePendingQuickAction() {
+        guard let defaults = UserDefaults.shared,
+              let rawValue = defaults.string(forKey: kPendingQuickAction) else { return }
+        defaults.removeObject(forKey: kPendingQuickAction)
+        switch rawValue {
+        case "random":
+            pendingRoute = .randomAlias
+        case "create":
+            pendingRoute = .createAlias
+        case "search":
+            pendingRoute = .search
+        default:
+            break
+        }
+    }
+
     /// Handles a tap on a Spotlight search result
     func handle(spotlightActivity userActivity: NSUserActivity) {
         guard let email = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else { return }

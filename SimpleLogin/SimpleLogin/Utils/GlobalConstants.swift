@@ -19,6 +19,7 @@ let kKeyboardExtensionMode = "KeyboardExtensionMode"
 let kLaunchCount = "LaunchCount"
 let kAliasCreationCount = "AliasCreationCount"
 let kSpotlightIndexingEnabled = "SpotlightIndexingEnabled"
+let kPendingQuickAction = "PendingQuickAction"
 
 let kDefaultPageSize = 20
 

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B57B8BFDBDEC2225B573DE5 /* RelayEmailWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901A90BDF0861FBE1ECFC929 /* RelayEmailWidgetsBundle.swift */; };
+		82768764ABD8928C78B3F843 /* QuickCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5BCCC7DDDE968F0B239BAF /* QuickCreateWidget.swift */; };
+		1C118DF7CE41DB0860E11BAB /* RandomAliasControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951D996FF3335FACA635FCF9 /* RandomAliasControl.swift */; };
+		87A54B2D33E610520EB3CDA2 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BB63227AC7D7E00AA29A1 /* GlobalConstants.swift */; };
+		488E6A16E6F110A693A72757 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D1D5A6272BCC9F00F5CFC5 /* ColorExtensions.swift */; };
+		AB66BC4CBF93AE3533846154 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03760F926DC0F0200E5ECAC /* Preferences.swift */; };
+		2E3C8D79D2C595A058604096 /* QuickActionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DF48D7A1AC51B0DC36FBC3 /* QuickActionIntent.swift */; };
+		D6B5619DD35CD7415127CC33 /* QuickActionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DF48D7A1AC51B0DC36FBC3 /* QuickActionIntent.swift */; };
+		7E14703B5288EF9CB0A0F367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0348891268A6F2D008D9629 /* Assets.xcassets */; };
+		20B8D12CEF9BEC56F846540D /* RelayEmailWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B0FB5452BBFF223F1A84692A /* RelayEmailWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D7F7E7A0DD198441F5354C95 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B877E0ED89B94B5B0C881EF7 /* DesignSystem.swift */; };
 		ACD99491947D5C1E17F499ED /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B877E0ED89B94B5B0C881EF7 /* DesignSystem.swift */; };
 		667AB851830A3308A9D25AC2 /* AliasPrefixSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */; };
@@ -196,6 +206,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8D3329C3F0F48D8251B6A923 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0348882268A6F29008D9629 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0058FE69C27D03CCEA056E26;
+			remoteInfo = RelayEmailWidgets;
+		};
 		C010031727A73637009735CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C0348882268A6F29008D9629 /* Project object */;
@@ -233,6 +250,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				20B8D12CEF9BEC56F846540D /* RelayEmailWidgets.appex in Embed App Extensions */,
 				C010031927A73637009735CD /* Keyboard Extension.appex in Embed App Extensions */,
 				C03E201427A1F436000D82F6 /* ShareExtension.appex in Embed App Extensions */,
 			);
@@ -242,6 +260,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		901A90BDF0861FBE1ECFC929 /* RelayEmailWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayEmailWidgetsBundle.swift; sourceTree = "<group>"; };
+		5B5BCCC7DDDE968F0B239BAF /* QuickCreateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickCreateWidget.swift; sourceTree = "<group>"; };
+		951D996FF3335FACA635FCF9 /* RandomAliasControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomAliasControl.swift; sourceTree = "<group>"; };
+		C730CE7BE713DB52EA29068B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64016EB93C23065CBD787D37 /* RelayEmailWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RelayEmailWidgets.entitlements; sourceTree = "<group>"; };
+		84DF48D7A1AC51B0DC36FBC3 /* QuickActionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionIntent.swift; sourceTree = "<group>"; };
+		B0FB5452BBFF223F1A84692A /* RelayEmailWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RelayEmailWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B877E0ED89B94B5B0C881EF7 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasPrefixSuggester.swift; sourceTree = "<group>"; };
 		D5063EA992DEC09DC7F84429 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -389,6 +414,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		72FF270C5E92DFDA6D1A4400 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C010030F27A73636009735CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -445,9 +477,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1518724328096B3FBB326C7E /* RelayEmailWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				901A90BDF0861FBE1ECFC929 /* RelayEmailWidgetsBundle.swift */,
+				5B5BCCC7DDDE968F0B239BAF /* QuickCreateWidget.swift */,
+				951D996FF3335FACA635FCF9 /* RandomAliasControl.swift */,
+				C730CE7BE713DB52EA29068B /* Info.plist */,
+				64016EB93C23065CBD787D37 /* RelayEmailWidgets.entitlements */,
+			);
+			path = RelayEmailWidgets;
+			sourceTree = "<group>";
+		};
 		EBCCA996553CC6370DA02F12 /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				84DF48D7A1AC51B0DC36FBC3 /* QuickActionIntent.swift */,
 				A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */,
 			);
 			path = Intents;
@@ -480,6 +525,7 @@
 		C0348881268A6F29008D9629 = {
 			isa = PBXGroup;
 			children = (
+				1518724328096B3FBB326C7E /* RelayEmailWidgets */,
 				C034888C268A6F29008D9629 /* SimpleLogin */,
 				C034889E268A6F2E008D9629 /* SimpleLoginTests */,
 				C03488A9268A6F2E008D9629 /* SimpleLoginUITests */,
@@ -493,6 +539,7 @@
 		C034888B268A6F29008D9629 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				B0FB5452BBFF223F1A84692A /* RelayEmailWidgets.appex */,
 				C034888A268A6F29008D9629 /* SimpleLogin.app */,
 				C034889B268A6F2E008D9629 /* SimpleLoginTests.xctest */,
 				C03488A6268A6F2E008D9629 /* SimpleLoginUITests.xctest */,
@@ -798,6 +845,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0058FE69C27D03CCEA056E26 /* RelayEmailWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54D4E34D7B3A37732DCCD870 /* Build configuration list for PBXNativeTarget "RelayEmailWidgets" */;
+			buildPhases = (
+				12D70E5E4C268A7D4A673A4F /* Sources */,
+				72FF270C5E92DFDA6D1A4400 /* Frameworks */,
+				EB0672435A2903848F57B87D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RelayEmailWidgets;
+			productName = RelayEmailWidgets;
+			productReference = B0FB5452BBFF223F1A84692A /* RelayEmailWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C010031127A73636009735CD /* Keyboard Extension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C010031A27A73637009735CD /* Build configuration list for PBXNativeTarget "Keyboard Extension" */;
@@ -833,6 +897,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2D17BCF94354D9404BCC7A5D /* PBXTargetDependency */,
 				C03E201327A1F436000D82F6 /* PBXTargetDependency */,
 				C010031827A73637009735CD /* PBXTargetDependency */,
 			);
@@ -966,6 +1031,7 @@
 			projectRoot = "";
 			targets = (
 				C0348889268A6F29008D9629 /* SimpleLogin */,
+				0058FE69C27D03CCEA056E26 /* RelayEmailWidgets */,
 				C010031127A73636009735CD /* Keyboard Extension */,
 				C03E200927A1F436000D82F6 /* ShareExtension */,
 				C034889A268A6F2E008D9629 /* SimpleLoginTests */,
@@ -975,6 +1041,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EB0672435A2903848F57B87D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E14703B5288EF9CB0A0F367 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C010031027A73636009735CD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1038,6 +1112,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		12D70E5E4C268A7D4A673A4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B57B8BFDBDEC2225B573DE5 /* RelayEmailWidgetsBundle.swift in Sources */,
+				82768764ABD8928C78B3F843 /* QuickCreateWidget.swift in Sources */,
+				1C118DF7CE41DB0860E11BAB /* RandomAliasControl.swift in Sources */,
+				87A54B2D33E610520EB3CDA2 /* GlobalConstants.swift in Sources */,
+				488E6A16E6F110A693A72757 /* ColorExtensions.swift in Sources */,
+				AB66BC4CBF93AE3533846154 /* Preferences.swift in Sources */,
+				2E3C8D79D2C595A058604096 /* QuickActionIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C010030E27A73636009735CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1063,6 +1151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B5619DD35CD7415127CC33 /* QuickActionIntent.swift in Sources */,
 				ACD99491947D5C1E17F499ED /* DesignSystem.swift in Sources */,
 				72CA3D584C6288F266AE30E9 /* AliasPrefixSuggester.swift in Sources */,
 				8712F7E9D3638B69B5F4DF67 /* RelayEmailIntents.swift in Sources */,
@@ -1237,6 +1326,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2D17BCF94354D9404BCC7A5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0058FE69C27D03CCEA056E26 /* RelayEmailWidgets */;
+			targetProxy = 8D3329C3F0F48D8251B6A923 /* PBXContainerItemProxy */;
+		};
 		C010031827A73637009735CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C010031127A73636009735CD /* Keyboard Extension */;
@@ -1271,6 +1365,64 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A2F05168C0A3190EC8C1F482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = RelayEmailWidgets/RelayEmailWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24100;
+				DEVELOPMENT_TEAM = 72VC334CSX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RelayEmailWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.4.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.simplelogin.ios-app.widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		516F4DFEACE5684D2A052C53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = RelayEmailWidgets/RelayEmailWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24100;
+				DEVELOPMENT_TEAM = 72VC334CSX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RelayEmailWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.4.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.simplelogin.ios-app.widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C010031B27A73637009735CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1641,6 +1793,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		54D4E34D7B3A37732DCCD870 /* Build configuration list for PBXNativeTarget "RelayEmailWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2F05168C0A3190EC8C1F482 /* Debug */,
+				516F4DFEACE5684D2A052C53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C010031A27A73637009735CD /* Build configuration list for PBXNativeTarget "Keyboard Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
