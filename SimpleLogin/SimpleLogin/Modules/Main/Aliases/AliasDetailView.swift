@@ -1,6 +1,6 @@
 //
 //  AliasDetailView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 04/11/2021.
 //
@@ -83,23 +83,35 @@ struct AliasDetailView: View {
             NameSection(viewModel: viewModel)
             ActivitiesSection(viewModel: viewModel, copiedText: $copiedText)
             Section {
-                Button(action: {
-                    Vibration.warning.vibrate(fallBackToOldSchool: true)
-                    showingDeletionAlert = true
-                }, label: {
-                    Text("Delete")
-                        .foregroundColor(.red)
-                })
+                Button(role: .destructive, action: confirmDeletion) {
+                    Label("Delete alias", systemImage: "trash")
+                        .foregroundStyle(.red)
+                }
             }
         }
         .listStyle(.insetGrouped)
+        .listSectionSpacing(.compact)
         .refreshable { await viewModel.refresh() }
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                AliasNavigationTitleView(alias: viewModel.alias)
-                    .onTapGesture {
-                        showAliasInFullScreen()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu(content: {
+                    ShareLink(item: viewModel.alias.email) {
+                        Label("Share", systemImage: "square.and.arrow.up")
                     }
+
+                    Button(action: showAliasInFullScreen) {
+                        Label.enterFullScreen
+                    }
+
+                    Section {
+                        Button(role: .destructive, action: confirmDeletion) {
+                            Label.delete
+                        }
+                    }
+                }, label: {
+                    Label("More", systemImage: "ellipsis")
+                })
             }
         }
         .disabled(viewModel.isUpdating)
@@ -122,6 +134,11 @@ struct AliasDetailView: View {
         }
     }
 
+    private func confirmDeletion() {
+        Vibration.warning.vibrate(fallBackToOldSchool: true)
+        showingDeletionAlert = true
+    }
+
     private func showAliasInFullScreen() {
         if UIDevice.current.userInterfaceIdiom == .phone {
             showingAliasEmailSheet = true
@@ -134,7 +151,6 @@ struct AliasDetailView: View {
 // MARK: - Sections
 
 private struct ActionsSection: View {
-    @Environment(\.colorScheme) private var colorScheme
     @State private var showingContacts = false
     @ObservedObject var viewModel: AliasDetailViewModel
     @Binding var copiedText: String?
@@ -147,86 +163,103 @@ private struct ActionsSection: View {
 
     var body: some View {
         Section(content: {
+            LabeledContent(content: {
+                Text(alias.relativeCreationDateString)
+            }, label: {
+                Label("Created", systemImage: "calendar")
+                    .labelStyle(.tile(.gray))
+            })
+
             Button(action: enterFullScreen) {
-                Text("Enter full screen")
+                Label("Show in full screen", systemImage: "arrow.up.left.and.arrow.down.right")
+                    .labelStyle(.tile(.brand))
+                    .foregroundStyle(Color(.label))
             }
         }, header: {
-            VStack(alignment: .leading) {
-                Text("\(alias.creationDateString) (\(alias.relativeCreationDateString))")
-                HStack {
-                    pinUnpinButton
-                    activateDeactivateButton
-                    copyButton
-                    sendEmailButton
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .textCase(nil)
-            .noHorizontalPadding()
+            header
+                .textCase(nil)
+                .padding(.bottom, 12)
         })
     }
 
-    private func button(action: @escaping () -> Void,
-                        image: Image,
-                        text: Text) -> some View {
-        Button(action: action) {
-            VStack(alignment: .center, spacing: 6) {
-                image
-                    .font(.title3)
-                text
-                    .font(.caption)
+    private var header: some View {
+        VStack(spacing: 14) {
+            AliasAvatar(email: alias.email, isEnabled: alias.enabled, size: 72)
+
+            VStack(spacing: 6) {
+                HStack(spacing: 6) {
+                    if alias.pinned {
+                        Image(systemName: "pin.fill")
+                            .foregroundStyle(.orange)
+                    }
+                    Text(alias.email)
+                        .font(.system(.title3, design: .rounded, weight: .bold))
+                        .foregroundStyle(.primary)
+                        .multilineTextAlignment(.center)
+                        .textSelection(.enabled)
+                }
+
+                Label(alias.enabled ? "Forwarding emails" : "Blocking all emails",
+                      systemImage: alias.enabled ? "checkmark.circle.fill" : "pause.circle.fill")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(alias.enabled ? Color.green : Color.secondary)
+            }
+
+            GlassEffectContainer(spacing: 16) {
+                HStack(spacing: 16) {
+                    actionButton(title: "Copy", systemImage: "doc.on.doc.fill") {
+                        Vibration.soft.vibrate()
+                        copiedText = alias.email
+                        UIPasteboard.general.string = alias.email
+                    }
+
+                    NavigationLink(isActive: $showingContacts,
+                                   destination: {
+                                       AliasContactsView(alias: alias,
+                                                         session: viewModel.session,
+                                                         onUpgrade: onUpgrade)
+                                   },
+                                   label: {
+                                       actionButton(title: "Contacts", systemImage: "paperplane.fill") {
+                                           showingContacts = true
+                                       }
+                                   })
+
+                    actionButton(title: alias.pinned ? "Unpin" : "Pin",
+                                 systemImage: alias.pinned ? "pin.slash.fill" : "pin.fill") {
+                        Vibration.soft.vibrate()
+                        viewModel.update(option: .pinned(!alias.pinned))
+                    }
+
+                    actionButton(title: alias.enabled ? "Pause" : "Resume",
+                                 systemImage: alias.enabled ? "pause.fill" : "play.fill") {
+                        Vibration.soft.vibrate()
+                        viewModel.toggle()
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(colorScheme == .light ? Color(.systemBackground) : Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .padding(.top, 8)
     }
 
-    private var pinUnpinButton: some View {
-        button(action: {
-                   Vibration.soft.vibrate()
-                   viewModel.update(option: .pinned(!alias.pinned))
-               },
-               image: Image(systemName: viewModel.alias.pinned ? "bookmark.slash" : "bookmark.fill"),
-               text: Text(viewModel.alias.pinned ? "unpin" : "pin"))
-            .foregroundColor(alias.pinned ? .red : .brand)
-    }
-
-    private var activateDeactivateButton: some View {
-        button(action: {
-                   Vibration.soft.vibrate()
-                   viewModel.toggle()
-               },
-               image: Image(systemName: alias.enabled ? "circle.dashed" : "checkmark.circle.fill"),
-               text: Text(alias.enabled ? "deactivate" : "activate"))
-            .foregroundColor(alias.enabled ? .red : .brand)
-    }
-
-    private var copyButton: some View {
-        button(action: {
-                   Vibration.soft.vibrate()
-                   copiedText = alias.email
-                   UIPasteboard.general.string = alias.email
-               },
-               image: Image(systemName: "doc.on.doc.fill"),
-               text: Text("copy"))
-            .foregroundColor(.brand)
-    }
-
-    private var sendEmailButton: some View {
-        NavigationLink(isActive: $showingContacts,
-                       destination: {
-                           AliasContactsView(alias: alias, session: viewModel.session, onUpgrade: onUpgrade)
-                       },
-                       label: {
-                           button(action: {
-                                      showingContacts = true
-                                  },
-                                  image: Image(systemName: "paperplane.fill"),
-                                  text: Text("contacts"))
-                               .foregroundColor(.brand)
-                       })
+    private func actionButton(title: String,
+                              systemImage: String,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 6) {
+                Image(systemName: systemImage)
+                    .font(.title3)
+                    .foregroundStyle(Color.brand)
+                    .frame(width: 56, height: 56)
+                    .glassEffect(.regular.interactive(), in: Circle())
+                Text(title)
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(.primary)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(title))
     }
 }
 
@@ -261,7 +294,8 @@ private struct NameSection: View {
 
     var body: some View {
         Section(content: {
-            Text(viewModel.alias.name ?? "")
+            Text(viewModel.alias.name.flatMap { $0.isEmpty ? nil : $0 } ?? "Add a display name")
+                .foregroundStyle(viewModel.alias.name?.isEmpty == false ? Color.primary : Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
                 .contentShape(Rectangle())
@@ -285,7 +319,8 @@ private struct NotesSection: View {
 
     var body: some View {
         Section(content: {
-            Text(viewModel.alias.note ?? "")
+            Text(viewModel.alias.note.flatMap { $0.isEmpty ? nil : $0 } ?? "Add a note, e.g. where it's used")
+                .foregroundStyle(viewModel.alias.note?.isEmpty == false ? Color.primary : Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
                 .contentShape(Rectangle())
@@ -331,16 +366,16 @@ private struct ActivitiesSection: View {
             VStack(alignment: .leading) {
                 Text("Last 14 days activities")
                 if !viewModel.activities.isEmpty {
-                    HStack {
+                    HStack(spacing: 10) {
                         section(action: .forward,
                                 count: viewModel.alias.forwardCount)
-                        Divider()
                         section(action: .reply,
                                 count: viewModel.alias.replyCount)
-                        Divider()
                         section(action: .block,
                                 count: viewModel.alias.blockCount)
                     }
+                    .textCase(nil)
+                    .padding(.vertical, 6)
                 }
             }
         })
@@ -350,27 +385,24 @@ private struct ActivitiesSection: View {
     }
 
     private func section(action: ActivityAction, count: Int) -> some View {
-        VStack {
-            Label {
-                Text(action.title)
-                    .fontWeight(.semibold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-            } icon: {
-                Image(systemName: action.iconSystemName)
-            }
-            .foregroundColor(action.color)
-
-            Text("\(count)")
-                .font(.title2)
-                .fontWeight(.bold)
-                // swiftlint:disable:next empty_count
-                .opacity(count == 0 ? 0.5 : 1)
-
-            Spacer()
+        VStack(spacing: 4) {
+            Image(systemName: action.iconSystemName)
+                .font(.footnote.weight(.bold))
+                .foregroundStyle(action.color)
+            Text(count, format: .number.notation(.compactName))
+                .font(.system(.title3, design: .rounded, weight: .bold))
+                .foregroundStyle(.primary)
+            Text(action.title)
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
         }
         .frame(maxWidth: .infinity)
-        .fixedSize(horizontal: false, vertical: true)
+        .padding(.vertical, 10)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        // swiftlint:disable:next empty_count
+        .opacity(count == 0 ? 0.6 : 1)
     }
 }
 
@@ -408,9 +440,12 @@ private struct ActivityView: View {
                 })
             }
         }, label: {
-            HStack {
+            HStack(spacing: 12) {
                 Image(systemName: activity.action.iconSystemName)
-                    .foregroundColor(activity.action.color)
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(.white)
+                    .frame(width: 30, height: 30)
+                    .background(activity.action.color.gradient, in: Circle())
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(activity.action == .reply ? activity.to : activity.from)

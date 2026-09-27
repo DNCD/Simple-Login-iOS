@@ -83,13 +83,20 @@ private struct DomainView: View {
     let domain: CustomDomain
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 6) {
+        HStack(spacing: 12) {
+            Image(systemName: "globe")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 34, height: 34)
+                .background((domain.verified ? Color.green : Color.gray).gradient,
+                            in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+
+            VStack(alignment: .leading, spacing: 4) {
                 Text(domain.domainName)
                     .fontWeight(.semibold)
                     .foregroundColor(domain.verified ? .primary : .secondary)
-                Text("\(domain.relativeCreationDateString) • \(domain.aliasCount) alias(es)")
-                    .font(.caption)
+                Text("\(domain.relativeCreationDateString) · \(domain.aliasCount) alias(es)")
+                    .font(.footnote)
                     .foregroundColor(.secondary)
             }
 

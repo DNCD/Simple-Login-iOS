@@ -1,6 +1,6 @@
 //
 //  CreateAliasView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 14/09/2021.
 //
@@ -101,6 +101,14 @@ private struct ContentView: View {
             prefixAndSuffixSection
             notesSection
             mailboxesSection
+            randomSection
+        }
+        .safeAreaInset(edge: .bottom) {
+            PrimaryButton(title: "Create alias", action: viewModel.createAlias)
+                .disabled(!viewModel.canCreate)
+                .opacity(viewModel.canCreate ? 1 : 0.5)
+                .padding(.horizontal)
+                .padding(.bottom, 8)
         }
     }
 
@@ -206,52 +214,35 @@ private struct ContentView: View {
 
     private var notesSection: some View {
         Section(content: {
-            TextEditor(text: $viewModel.notes)
-                .frame(height: 80)
+            TextField("Where will you use this alias?", text: $viewModel.notes, axis: .vertical)
+                .lineLimit(2...6)
         }, header: {
             Text("Notes")
         })
     }
 
-    private var buttons: some View {
-        VStack {
-            PrimaryButton(title: "Create", action: viewModel.createAlias)
-                .padding(.vertical)
-                .opacity(viewModel.canCreate ? 1 : 0.5)
-                .disabled(!viewModel.canCreate)
+    private var randomSection: some View {
+        Section(content: {
+            Button(action: {
+                viewModel.random(mode: .word)
+            }, label: {
+                Label("Random words", systemImage: "textformat.abc")
+                    .labelStyle(.tile(.purple))
+                    .foregroundStyle(Color(.label))
+            })
 
-            GeometryReader { geometry in
-                HStack {
-                    Spacer()
-
-                    let lineWidth = geometry.size.width / 5
-                    horizontalLine
-                        .frame(width: lineWidth)
-
-                    Text("OR")
-                        .font(.caption2)
-                        .fontWeight(.medium)
-
-                    horizontalLine
-                        .frame(width: lineWidth)
-
-                    Spacer()
-                }
-            }
-
-            Group {
-                Button("Random by word") {
-                    viewModel.random(mode: .word)
-                }
-                .padding(.vertical, 10)
-
-                Button("Random by UUID") {
-                    viewModel.random(mode: .uuid)
-                }
-            }
-            .foregroundColor(.brand)
-            .font(.body)
-        }
+            Button(action: {
+                viewModel.random(mode: .uuid)
+            }, label: {
+                Label("Random characters", systemImage: "number")
+                    .labelStyle(.tile(.teal))
+                    .foregroundStyle(Color(.label))
+            })
+        }, header: {
+            Text("Or create a random alias")
+        }, footer: {
+            Text("Random aliases are created instantly with your default mailbox.")
+        })
     }
 
     private var mailboxesSection: some View {
@@ -265,25 +256,16 @@ private struct ContentView: View {
         }, header: {
             Text("Mailboxes")
         }, footer: {
-            VStack {
-                Button("What are mailboxes?") {
-                    selectedUrlString = Brand.addMailboxDocsUrlString
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.brand)
-                buttons
+            Button("What are mailboxes?") {
+                selectedUrlString = Brand.addMailboxDocsUrlString
             }
+            .font(.footnote)
+            .foregroundColor(.brand)
         })
         .transaction { transaction in
             transaction.animation = nil
         }
         .betterSafariView(urlString: $selectedUrlString)
-    }
-
-    private var horizontalLine: some View {
-        Color.secondary
-            .opacity(0.5)
-            .frame(height: 1)
     }
 }
 

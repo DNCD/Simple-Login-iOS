@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7F7E7A0DD198441F5354C95 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B877E0ED89B94B5B0C881EF7 /* DesignSystem.swift */; };
 		ACD99491947D5C1E17F499ED /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B877E0ED89B94B5B0C881EF7 /* DesignSystem.swift */; };
 		667AB851830A3308A9D25AC2 /* AliasPrefixSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */; };
 		72CA3D584C6288F266AE30E9 /* AliasPrefixSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */; };
@@ -1202,6 +1203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7F7E7A0DD198441F5354C95 /* DesignSystem.swift in Sources */,
 				667AB851830A3308A9D25AC2 /* AliasPrefixSuggester.swift in Sources */,
 				EFB0B65227F0FE89006D3A7F /* SecondaryButton.swift in Sources */,
 				C00874B527A989D3004F32FA /* SLError.swift in Sources */,

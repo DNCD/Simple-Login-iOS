@@ -120,13 +120,20 @@ private struct MailboxView: View {
                 }
             }
         }, label: {
-            HStack {
-                VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 12) {
+                Image(systemName: mailbox.default ? "tray.full.fill" : "tray.fill")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 34, height: 34)
+                    .background((mailbox.verified ? Color.blue : Color.gray).gradient,
+                                in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+
+                VStack(alignment: .leading, spacing: 4) {
                     Text(mailbox.email)
                         .fontWeight(.semibold)
                         .foregroundColor(mailbox.verified ? .primary : .secondary)
-                    Text("\(mailbox.relativeCreationDateString) • \(mailbox.aliasCount) alias(es)")
-                        .font(.caption)
+                    Text("\(mailbox.relativeCreationDateString) · \(mailbox.aliasCount) alias(es)")
+                        .font(.footnote)
                         .foregroundColor(.secondary)
                 }
 
