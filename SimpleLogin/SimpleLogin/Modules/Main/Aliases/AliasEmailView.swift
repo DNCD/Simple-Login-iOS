@@ -46,7 +46,7 @@ struct AliasEmailView: View {
                     AliasEmailQrView(email: email)
                 }
             }
-            .accentColor(.slPurple)
+            .accentColor(.brand)
             .padding()
             .toolbar { toolbarContent }
             .onAppear {

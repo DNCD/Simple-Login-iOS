@@ -164,7 +164,7 @@ struct OtpView: View {
             .navigationBarTitle(viewModel.mode.title, displayMode: .inline)
             .navigationBarItems(leading: closeButton)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .toast(isPresenting: $showingLoadingHud) {
             AlertToast(type: .loading)
         }

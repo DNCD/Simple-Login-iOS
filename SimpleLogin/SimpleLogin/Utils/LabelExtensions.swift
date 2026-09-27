@@ -1,6 +1,6 @@
 //
 //  LabelExtensions.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Nhon Nguyen on 17/02/2022.
 //
@@ -29,7 +29,7 @@ extension Label where Title == Text, Icon == Image {
     }
 
     static var pin: Label {
-        Label("Pin", systemImage: "bookmark")
+        Label("Pin", systemImage: "pin")
     }
 
     static var contacts: Label {
@@ -37,6 +37,6 @@ extension Label where Title == Text, Icon == Image {
     }
 
     static var unpin: Label {
-        Label("Unpin", systemImage: "bookmark.slash")
+        Label("Unpin", systemImage: "pin.slash")
     }
 }

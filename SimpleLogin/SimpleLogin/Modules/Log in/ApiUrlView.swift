@@ -52,7 +52,7 @@ struct ApiUrlView: View {
             .navigationBarItems(leading: closeOrCancelButton,
                                 trailing: editOrDoneButton)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .alertToastError($error)
     }
 
@@ -63,7 +63,7 @@ struct ApiUrlView: View {
     }
 
     private var warningText: some View {
-        Text("⚠️ Do not change API URL unless you are hosting SimpleLogin with your own server")
+        Text("⚠️ Do not change API URL unless you are hosting RelayEmail on your own server")
             .font(.footnote)
             .foregroundColor(.red)
     }

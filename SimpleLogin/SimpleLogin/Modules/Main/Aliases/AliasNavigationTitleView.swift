@@ -15,7 +15,7 @@ struct AliasNavigationTitleView: View {
         HStack {
             if alias.pinned {
                 Image(systemName: "bookmark.fill")
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
             }
             Text(alias.email)
                 .fontWeight(.medium)

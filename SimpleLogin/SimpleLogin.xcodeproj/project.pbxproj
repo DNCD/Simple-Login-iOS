@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		753FC192D52A3000F9BA81A3 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5063EA992DEC09DC7F84429 /* AppRouter.swift */; };
+		EDA61BA3964DDEF3DDE083F4 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */; };
+		614465079CAFB3A50026A449 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43E39B324973C34F85391DF /* AppearanceMode.swift */; };
+		B7FB101768BA29B3C9A6A174 /* AliasTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB193044DF69FC8C90D1D0 /* AliasTips.swift */; };
+		9021D83E04ABAE22C144500C /* FloatingCreateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */; };
+		8712F7E9D3638B69B5F4DF67 /* RelayEmailIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */; };
 		350D53862AA87EA4000C342C /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 350D53852AA87EA4000C342C /* SwiftUIIntrospect */; };
 		350D53882AA87EF9000C342C /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 350D53872AA87EF9000C342C /* SwiftUIIntrospect */; };
 		35373C45289177DA00000297 /* LogInWithProtonButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35373C44289177DA00000297 /* LogInWithProtonButtonView.swift */; };
@@ -159,7 +165,6 @@
 		EF9FE0DF2813F6BB003B3CB8 /* AliasNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FE0DE2813F6BB003B3CB8 /* AliasNavigationTitleView.swift */; };
 		EF9FE0E12813FCC1003B3CB8 /* AliasEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FE0E02813FCC1003B3CB8 /* AliasEmailView.swift */; };
 		EF9FE0E328140A7F003B3CB8 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FE0E228140A7F003B3CB8 /* TextFieldAlert.swift */; };
-		EF9FE91B27F996580082FAEF /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FE91A27F996580082FAEF /* MainTabBar.swift */; };
 		EFA2A37D27B6F3460020E808 /* LabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA2A37C27B6F3460020E808 /* LabelText.swift */; };
 		EFA52AE827CA39B000994547 /* HowItWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA52AE727CA39B000994547 /* HowItWorksView.swift */; };
 		EFA52AEB27CA525700994547 /* HowItWorkStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA52AEA27CA525700994547 /* HowItWorkStep.swift */; };
@@ -236,6 +241,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D5063EA992DEC09DC7F84429 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
+		B43E39B324973C34F85391DF /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
+		92AB193044DF69FC8C90D1D0 /* AliasTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasTips.swift; sourceTree = "<group>"; };
+		5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCreateButton.swift; sourceTree = "<group>"; };
+		A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayEmailIntents.swift; sourceTree = "<group>"; };
 		35373C44289177DA00000297 /* LogInWithProtonButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInWithProtonButtonView.swift; sourceTree = "<group>"; };
 		35373C4628917A4900000297 /* ProtonButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonButtonStyle.swift; sourceTree = "<group>"; };
 		353E8272290150D7004C9154 /* DeletedAliasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedAliasesView.swift; sourceTree = "<group>"; };
@@ -357,7 +368,6 @@
 		EF9FE0DE2813F6BB003B3CB8 /* AliasNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasNavigationTitleView.swift; sourceTree = "<group>"; };
 		EF9FE0E02813FCC1003B3CB8 /* AliasEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasEmailView.swift; sourceTree = "<group>"; };
 		EF9FE0E228140A7F003B3CB8 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
-		EF9FE91A27F996580082FAEF /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		EFA2A37C27B6F3460020E808 /* LabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelText.swift; sourceTree = "<group>"; };
 		EFA52AE727CA39B000994547 /* HowItWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksView.swift; sourceTree = "<group>"; };
 		EFA52AEA27CA525700994547 /* HowItWorkStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorkStep.swift; sourceTree = "<group>"; };
@@ -435,6 +445,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EBCCA996553CC6370DA02F12 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		C00FD7FB27AA70CC0072DD67 /* Tips */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,13 +575,13 @@
 		C03488BA268A719E008D9629 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				EBCCA996553CC6370DA02F12 /* Intents */,
 				C03F4F3126E1736500BBF2A8 /* About */,
 				C03F4F3026E1735B00BBF2A8 /* Account */,
 				C03F4F2F26E1735100BBF2A8 /* Advanced */,
 				C03F4F2E26E1733200BBF2A8 /* Aliases */,
 				EFC1774F27FA3AC7003245A5 /* Create */,
 				EFB118522800C26B009752BE /* Settings */,
-				EF9FE91A27F996580082FAEF /* MainTabBar.swift */,
 				C0100B2F26DEC46900085C24 /* MainView.swift */,
 			);
 			path = Main;
@@ -584,6 +602,7 @@
 		C03F4F2E26E1733200BBF2A8 /* Aliases */ = {
 			isa = PBXGroup;
 			children = (
+				92AB193044DF69FC8C90D1D0 /* AliasTips.swift */,
 				C087655A27AE740200FF26E6 /* Search */,
 				C03F4F1426E15ADD00BBF2A8 /* AliasesView.swift */,
 				C03F4F1626E15AEB00BBF2A8 /* AliasesViewModel.swift */,
@@ -674,6 +693,7 @@
 		C0AAE98C26E4150200247742 /* Supporting Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */,
 				EF6FEA6D27B8358800557158 /* AlertToastModifier.swift */,
 				C05A4CDD273C6C73005F8CC5 /* AutoFocusTextField.swift */,
 				EFFBBDE527C96CCA00C8E6DD /* BetterSafariViewModifier.swift */,
@@ -706,6 +726,9 @@
 		C0CBE93B26B9D067004833F6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B43E39B324973C34F85391DF /* AppearanceMode.swift */,
+				C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */,
+				D5063EA992DEC09DC7F84429 /* AppRouter.swift */,
 				EF5E150627D94A160047C568 /* AliasExtensions.swift */,
 				EF4F43DE27C15B2D00CD1942 /* AlertExtensions.swift */,
 				C0542ABD27AEDF3B00188C63 /* BaseViewController.swift */,
@@ -1041,6 +1064,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8712F7E9D3638B69B5F4DF67 /* RelayEmailIntents.swift in Sources */,
+				9021D83E04ABAE22C144500C /* FloatingCreateButton.swift in Sources */,
+				B7FB101768BA29B3C9A6A174 /* AliasTips.swift in Sources */,
+				614465079CAFB3A50026A449 /* AppearanceMode.swift in Sources */,
+				EDA61BA3964DDEF3DDE083F4 /* SpotlightIndexer.swift in Sources */,
+				753FC192D52A3000F9BA81A3 /* AppRouter.swift in Sources */,
 				C0F1963C273483CC0062B418 /* Session.swift in Sources */,
 				EF6FEA6E27B8358800557158 /* AlertToastModifier.swift in Sources */,
 				C04BB63327AC7D7E00AA29A1 /* GlobalConstants.swift in Sources */,
@@ -1064,7 +1093,6 @@
 				C043D41626E01E280051B282 /* KeychainService.swift in Sources */,
 				C03F4F1726E15AEB00BBF2A8 /* AliasesViewModel.swift in Sources */,
 				C087655E27AE798300FF26E6 /* SearchAliasesViewModel.swift in Sources */,
-				EF9FE91B27F996580082FAEF /* MainTabBar.swift in Sources */,
 				EFFBBDEA27C96FAE00C8E6DD /* Capacity.swift in Sources */,
 				C0F732B7278F854F004608DB /* CustomDomainsView.swift in Sources */,
 				EF15C55927BEE4B8008497F2 /* LabelExtensions.swift in Sources */,
@@ -1253,9 +1281,9 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Keyboard Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = SimpleLogin;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1281,9 +1309,9 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Keyboard Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = SimpleLogin;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1350,7 +1378,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1405,7 +1433,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1428,7 +1456,7 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SimpleLogin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1454,7 +1482,7 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SimpleLogin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1476,7 +1504,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				INFOPLIST_FILE = SimpleLoginTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1500,7 +1528,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				INFOPLIST_FILE = SimpleLoginTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1564,9 +1592,9 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1592,9 +1620,9 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

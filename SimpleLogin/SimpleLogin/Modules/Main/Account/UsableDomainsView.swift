@@ -42,7 +42,7 @@ struct UsableDomainView: View {
         VStack(alignment: .leading) {
             Text(usableDomain.domain)
                 .fontWeight(.medium)
-            let domainType: Suffix.DomainType = usableDomain.isCustom ? .custom : .simpleLogin
+            let domainType: Suffix.DomainType = usableDomain.isCustom ? .custom : .relayEmail
             Text(domainType.localizedDescription)
                 .font(.caption)
                 .foregroundColor(domainType.color)

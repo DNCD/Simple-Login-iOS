@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Suffix {
     enum DomainType {
-        case custom, `public`, premium, simpleLogin
+        case custom, `public`, premium, relayEmail
 
         var localizedDescription: String {
             switch self {
@@ -20,8 +20,8 @@ extension Suffix {
                 "Public domain"
             case .premium:
                 "Premium domain"
-            case .simpleLogin:
-                "SimpleLogin domain"
+            case .relayEmail:
+                "RelayEmail domain"
             }
         }
     }
@@ -41,8 +41,8 @@ extension Suffix.DomainType {
         case .public:
             .secondary
         case .premium:
-            .slPurple
-        case .simpleLogin:
+            .brand
+        case .relayEmail:
             .secondary
         }
     }

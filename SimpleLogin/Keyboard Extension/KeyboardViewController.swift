@@ -64,7 +64,7 @@ final class KeyboardViewController: UIInputViewController {
     private func addNextButton() {
         guard needsInputModeSwitchKey else { return }
         nextKeyboardButton.setImage(UIImage(systemName: "globe"), for: .normal)
-        nextKeyboardButton.tintColor = .slPurple
+        nextKeyboardButton.tintColor = .brand
         nextKeyboardButton.addTarget(self,
                                      action: #selector(handleInputModeList(from:with:)),
                                      for: .allTouchEvents)
@@ -78,7 +78,7 @@ final class KeyboardViewController: UIInputViewController {
 
     private func addDeleteButton() {
         deleteButton.setImage(UIImage(systemName: "delete.left"), for: .normal)
-        deleteButton.tintColor = .slPurple
+        deleteButton.tintColor = .brand
         deleteButton.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(deleteButton)

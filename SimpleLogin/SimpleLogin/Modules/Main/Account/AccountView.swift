@@ -43,8 +43,10 @@ struct AccountView: View {
             if viewModel.isInitialized {
                 Form {
                     UserInfoSection()
-                    ConnectToProtonSection(protonAddress: connectedProtonAddress) {
-                        viewModel.connectWithProtonAction(apiUrl: preferences.apiUrl)
+                    if featureFlags.protonLoginEnabled || connectedProtonAddress != nil {
+                        ConnectToProtonSection(protonAddress: connectedProtonAddress) {
+                            viewModel.connectWithProtonAction(apiUrl: preferences.apiUrl)
+                        }
                     }
                     NewslettersSection()
                     AliasesSection()
@@ -74,7 +76,7 @@ struct AccountView: View {
                             .prefersEphemeralWebBrowserSession(true)
                     }
                     // swiftlint:disable:next force_unwrapping
-                    return .init(url: URL(string: "https://simplelogin.io")!,
+                    return .init(url: URL(string: Brand.websiteUrlString)!,
                                  callbackURLScheme: nil,
                                  onCompletion: viewModel.handleLinkingResult)
                 }
@@ -193,7 +195,7 @@ private struct UserInfoSection: View {
         Image(systemName: "person.crop.circle.fill")
             .resizable()
             .scaledToFit()
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
             .frame(width: min(64, UIScreen.main.bounds.width / 7))
     }
 
@@ -259,7 +261,7 @@ private struct NewslettersSection: View {
             Toggle(isOn: $viewModel.notification) {
                 Label("Newsletters", systemImage: "newspaper")
             }
-            .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+            .toggleStyle(SwitchToggleStyle(tint: .brand))
         }
     }
 }
@@ -395,7 +397,7 @@ private struct DeleteAccountSection: View {
         }, header: {
             Text("Account Deletion")
         }, footer: {
-            Text("If SimpleLogin isn't the right fit for you, you can simply delete your account.")
+            Text("If RelayEmail isn't the right fit for you, you can simply delete your account.")
         })
     }
 }
@@ -428,9 +430,9 @@ private struct ConnectToProtonSection: View {
                     .fontWeight(.bold)
             } else {
                 Text("""
-                You can connect your Proton and SimpleLogin accounts.
-                You can then quickly log in to your SimpleLogin account using the Proton one.
-                If you have Proton Unlimited, Business or Visionary, you can have SimpleLogin premium for free.
+                You can connect your Proton and RelayEmail accounts.
+                You can then quickly log in to your RelayEmail account using the Proton one.
+                If you have Proton Unlimited, Business or Visionary, you may be eligible for RelayEmail premium.
                 """)
             }
         })
@@ -492,7 +494,7 @@ private struct EditDisplayNameView: View {
             .navigationTitle(viewModel.userInfo.email)
             .navigationBarItems(leading: cancelButton, trailing: doneButton)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .onAppear {
             displayName = viewModel.userInfo.name
         }

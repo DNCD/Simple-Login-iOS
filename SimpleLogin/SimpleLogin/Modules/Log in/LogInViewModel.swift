@@ -53,7 +53,7 @@ final class LogInViewModel: ObservableObject {
     func updateApiUrl(_ apiUrl: String) {
         if let url = URL(string: apiUrl) {
             apiService = APIService(baseURL: url,
-                                    session: .init(configuration: .simpleLogin),
+                                    session: .init(configuration: .relayEmail),
                                     printDebugInformation: featureFlags.printNetworkDebugInformation)
         }
     }
@@ -110,7 +110,7 @@ final class LogInViewModel: ObservableObject {
 }
 
 extension URLSessionConfiguration {
-    static var simpleLogin: URLSessionConfiguration {
+    static var relayEmail: URLSessionConfiguration {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 20
         return config
@@ -119,7 +119,7 @@ extension URLSessionConfiguration {
 
 private extension APIService {
     static let `default`: APIService =
-        .init(baseURL: URL(string: "https://app.simplelogin.io/")!, // swiftlint:disable:this force_unwrapping
-              session: .init(configuration: .simpleLogin),
+        .init(baseURL: URL(string: kDefaultApiUrlString)!, // swiftlint:disable:this force_unwrapping
+              session: .init(configuration: .relayEmail),
               printDebugInformation: featureFlags.printNetworkDebugInformation)
 }

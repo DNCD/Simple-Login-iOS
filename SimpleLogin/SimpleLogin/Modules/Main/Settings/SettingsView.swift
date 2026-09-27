@@ -1,13 +1,16 @@
 //
 //  SettingsView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Nhon Nguyen on 08/04/2022.
 //
 
 import AlertToast
+import AppIntents
 import SimpleLoginPackage
+import StoreKit
 import SwiftUI
+import TipKit
 
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
@@ -23,6 +26,7 @@ struct SettingsView: View {
                 }
                 LocalSettingsSection()
                 AliasDisplayModeSection()
+                SiriAndSearchSection()
                 KeyboardExtensionSection()
                 RateAndTipsSection()
                 AboutSection(showingAboutView: $showingAboutView)
@@ -50,7 +54,7 @@ private struct BiometricAuthenticationSection: View {
                 Label(localAuthenticator.biometryType.description,
                       systemImage: localAuthenticator.biometryType.systemImageName)
             }
-            .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+            .toggleStyle(SwitchToggleStyle(tint: .brand))
 
             if localAuthenticator.biometricAuthEnabled {
                 VStack {
@@ -65,7 +69,7 @@ private struct BiometricAuthenticationSection: View {
                             }
                         }
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+                    .toggleStyle(SwitchToggleStyle(tint: .brand))
 
                     Text("Request local authentication everytime the app goes in foreground")
                         .font(.caption)
@@ -77,32 +81,67 @@ private struct BiometricAuthenticationSection: View {
         }, header: {
             Text("Local authentication")
         }, footer: {
-            Text("Restrict unwelcome access to your SimpleLogin application on this device")
+            Text("Restrict unwelcome access to your RelayEmail app on this device")
         })
     }
 }
 
-/// For settings that are local like haptic effect & dark mode
+/// For settings that are local like haptic effect & appearance
 private struct LocalSettingsSection: View {
     @AppStorage(kHapticFeedbackEnabled) private var hapticEffectEnabled = true
-    @AppStorage(kForceDarkMode) private var forceDarkMode = false
+    @AppStorage(kAppearance) private var appearance: AppearanceMode = .system
 
     var body: some View {
-        Section {
-            Toggle("Haptic feedback", isOn: $hapticEffectEnabled)
-                .toggleStyle(SwitchToggleStyle(tint: .slPurple))
-
-            VStack {
-                Toggle("Force dark mode", isOn: $forceDarkMode)
-                    .toggleStyle(SwitchToggleStyle(tint: .slPurple))
-
-                Text("You need to restart the application for this option to take effect")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: true)
+        Section(content: {
+            Picker(selection: $appearance) {
+                ForEach(AppearanceMode.allCases) { mode in
+                    Label(mode.title, systemImage: mode.systemImageName)
+                        .tag(mode)
+                }
+            } label: {
+                Label("Appearance", systemImage: "paintpalette")
             }
-        }
+            .pickerStyle(.menu)
+
+            Toggle(isOn: $hapticEffectEnabled) {
+                Label("Haptic feedback", systemImage: "iphone.radiowaves.left.and.right")
+            }
+            .toggleStyle(SwitchToggleStyle(tint: .brand))
+        }, header: {
+            Text("General")
+        })
+    }
+}
+
+/// Siri, Shortcuts, Action button & Spotlight
+private struct SiriAndSearchSection: View {
+    @AppStorage(kSpotlightIndexingEnabled) private var spotlightIndexingEnabled = true
+    @State private var showingSiriTip = true
+
+    var body: some View {
+        Section(content: {
+            TipView(SiriShortcutsTip())
+
+            SiriTipView(intent: CreateRandomAliasIntent(), isVisible: $showingSiriTip)
+
+            ShortcutsLink()
+                .frame(maxWidth: .infinity)
+
+            Toggle(isOn: $spotlightIndexingEnabled) {
+                Label("Show aliases in Spotlight", systemImage: "magnifyingglass")
+            }
+            .toggleStyle(SwitchToggleStyle(tint: .brand))
+            .onChange(of: spotlightIndexingEnabled) { _, isEnabled in
+                if !isEnabled {
+                    SpotlightIndexer.removeAll()
+                }
+            }
+        }, header: {
+            Text("Siri & Search")
+        }, footer: {
+            // swiftlint:disable:next line_length
+            Text("Search your aliases from the Home Screen and tap a result to copy it. Long press the app icon for quick actions.")
+        })
     }
 }
 
@@ -173,7 +212,7 @@ private struct KeyboardExtensionSection: View {
                 }, label: {
                     Text("Open Settings")
                         .fontWeight(.medium)
-                        .foregroundColor(.slPurple)
+                        .foregroundColor(.brand)
                 })
 
                 Text("•")
@@ -183,7 +222,7 @@ private struct KeyboardExtensionSection: View {
                 }, label: {
                     Text("Why full access?")
                         .fontWeight(.medium)
-                        .foregroundColor(.slPurple)
+                        .foregroundColor(.brand)
                 })
 
                 Spacer()
@@ -212,8 +251,8 @@ private struct KeyboardFullAccessExplanationView: View {
                     // swiftlint:enable line_length
                     HStack {
                         Text("Need more information?")
-                        URLButton(urlString: "mailto:support@simplelogin.zendesk.com",
-                                  foregroundColor: .slPurple) {
+                        URLButton(urlString: "mailto:\(Brand.supportEmail)",
+                                  foregroundColor: .brand) {
                             Label("Email us", systemImage: "envelope.fill")
                         }
                     }
@@ -236,16 +275,21 @@ private struct KeyboardFullAccessExplanationView: View {
 }
 
 private struct RateAndTipsSection: View {
+    @Environment(\.requestReview) private var requestReview
+
     var body: some View {
         Section {
-            Button(action: openAppStore) {
+            Button(action: {
+                requestReview()
+            }, label: {
                 Label(title: {
-                    Text("Rate & review on App Store")
+                    Text("Rate \(Brand.name)")
                         .foregroundColor(Color(.label))
                 }, icon: {
-                    Text("🌟")
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
                 })
-            }
+            })
 
             NavigationLink(destination: {
                 TipsView(isFirstTime: false)
@@ -253,16 +297,11 @@ private struct RateAndTipsSection: View {
                 Label(title: {
                     Text("Tips")
                 }, icon: {
-                    Text("💡")
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundStyle(.orange)
                 })
             })
         }
-    }
-
-    private func openAppStore() {
-        let urlString = "https://apps.apple.com/app/id1494359858?action=write-review"
-        guard let writeReviewURL = URL(string: urlString) else { return }
-        UIApplication.shared.open(writeReviewURL, options: [:])
     }
 }
 
@@ -276,7 +315,7 @@ private struct AboutSection: View {
                                AboutView()
                            },
                            label: {
-                               Label("About SimpleLogin", systemImage: "info.circle")
+                               Label("About RelayEmail", systemImage: "info.circle")
                            })
         }
     }

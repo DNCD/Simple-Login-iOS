@@ -1,6 +1,6 @@
 //
 //  AliasCompactView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 26/10/2021.
 //
@@ -27,8 +27,8 @@ struct AliasCompactView: View {
                     .foregroundColor(alias.enabled ? .primary : .secondary)
             } icon: {
                 if alias.pinned {
-                    Image(systemName: "bookmark.fill")
-                        .foregroundColor(.accentColor)
+                    Image(systemName: "pin.fill")
+                        .foregroundStyle(.orange)
                 }
             }
             .font(.headline)
@@ -103,6 +103,16 @@ struct AliasCompactView: View {
             AliasEmailView(email: alias.email)
         }
         .contextMenu {
+            Section {
+                Button(action: onCopy) {
+                    Label.copy
+                }
+
+                ShareLink(item: alias.email) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            }
+
             Section {
                 Button(action: {
                     if UIDevice.current.userInterfaceIdiom == .phone {
@@ -228,6 +238,6 @@ struct AliasCompactView_Previews: PreviewProvider {
                              onUnpin: {},
                              onDelete: {})
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
     }
 }

@@ -28,7 +28,7 @@ struct UpgradeNeededView: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 ForEach(kPremiumCapacities) {
-                    CapacityView(capacity: $0, checkmarkColor: .slPurple)
+                    CapacityView(capacity: $0, checkmarkColor: .brand)
                 }
                 Text("...and all of our upcoming features.")
             }
@@ -46,12 +46,12 @@ struct UpgradeNeededView: View {
         .padding()
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Upgrade now"),
-                  message: Text("Open SimpleLogin application ➝ My account ➝ Upgrade"),
+                  message: Text("Open RelayEmail application ➝ My account ➝ Upgrade"),
                   dismissButton: .default(Text("OK")) { onOk?() })
         }
         .onAppear {
             UIView.appearance(whenContainedInInstancesOf:
-                [UIAlertController.self]).tintColor = .slPurple
+                [UIAlertController.self]).tintColor = .brand
         }
     }
 }
