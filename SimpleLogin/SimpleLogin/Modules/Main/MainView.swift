@@ -92,8 +92,9 @@ struct MainView: View {
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
         .tabViewBottomAccessory {
-            QuickCreateAccessory(onCreateAlias: showCreateAlias,
-                                 onRandomAlias: { handle(.randomAlias) })
+            QuickCreateAccessory(onCreateAlias: showCreateAlias) {
+                handle(.randomAlias)
+            }
         }
         .onChange(of: selectedItem) {
             Vibration.selection.vibrate()
