@@ -20,12 +20,16 @@ struct CreatedAliasView: View {
                     onSelectAlias(alias)
                 }
 
+            Text("Tap the alias to insert it")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+
             Button(action: {
                 viewModel.handleCreatedAlias()
             }, label: {
-                Label("Back", systemImage: "arrowshape.turn.up.backward.fill")
+                Label("Back", systemImage: "chevron.backward")
             })
-            .foregroundColor(.brand)
+            .buttonStyle(.glass)
         }
         .padding(.horizontal, 44)
     }

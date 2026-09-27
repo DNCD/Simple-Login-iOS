@@ -1,6 +1,6 @@
 //
 //  UpgradeView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 28/12/2021.
 //
@@ -25,27 +25,33 @@ struct UpgradeView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                freePlanSection
+            VStack(alignment: .leading, spacing: 20) {
+                PremiumHeroView(title: "\(Brand.name) Premium",
+                                subtitle: "Unlimited aliases, mailboxes and custom domains.")
                 premiumPlanSection
+                freePlanSection
                 yearlyButton
-                    .padding(.top)
                 monthlyButton
-                    .padding(.vertical)
-                SecondaryButton(title: "Restore purchasse") {
+                Button("Restore purchases") {
                     viewModel.restorePurchase()
                 }
+                .font(.subheadline.weight(.semibold))
+                .frame(maxWidth: .infinity)
                 // swiftlint:disable:next line_length
                 Text("Subscription can be managed and canceled at anytime by going to Settings ➝ Your Apple ID ➝ Subscriptions.")
-                    .font(.callout)
+                    .font(.footnote)
                     .foregroundColor(.secondary)
-                    .padding(.vertical)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
                     .fixedSize(horizontal: false, vertical: true)
                 termsAndPrivacyView
+                    .frame(maxWidth: .infinity)
             }
             .padding()
+            .frame(maxWidth: 600)
+            .frame(maxWidth: .infinity)
         }
-        .navigationBarTitle("Upgrade for more features", displayMode: .inline)
+        .navigationBarTitle("Upgrade", displayMode: .inline)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(gradientBackground)
         .onAppear {
@@ -71,49 +77,42 @@ struct UpgradeView: View {
     }
 
     private var gradientBackground: some View {
-        LinearGradient(gradient: .init(colors: [
-            .brand.opacity(0.05),
-            .brand.opacity(0.1),
-            .brand.opacity(0.15),
-            .brand.opacity(0.2)
-        ]),
-        startPoint: .top,
-        endPoint: .bottom)
-            .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
+        LinearGradient(colors: [Color.brand.opacity(0.25), Color(.systemGroupedBackground)],
+                       startPoint: .top,
+                       endPoint: .center)
+            .ignoresSafeArea()
     }
 
-    @ViewBuilder
     private var freePlanSection: some View {
-        Text("Your current free plan".uppercased())
-            .font(.headline)
-            .fontWeight(.medium)
-            .padding(.horizontal)
-            .padding(.bottom, 4)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-        VStack(alignment: .leading, spacing: 6) {
-            ForEach(kFreeCapacities) {
-                CapacityView(capacity: $0, checkmarkColor: nil)
+        DisclosureGroup(content: {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(kFreeCapacities) {
+                    CapacityView(capacity: $0, checkmarkColor: nil)
+                }
             }
-        }
+            .padding(.top, 8)
+        }, label: {
+            Text("What's included in your free plan")
+                .font(.subheadline.weight(.semibold))
+        })
+        .padding()
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 
-    @ViewBuilder
     private var premiumPlanSection: some View {
-        Text("Go premium for more".uppercased())
-            .font(.title3)
-            .fontWeight(.heavy)
-            .padding([.horizontal, .top])
-            .padding(.bottom, 4)
-            .foregroundColor(.brand)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
             ForEach(kPremiumCapacities) {
                 CapacityView(capacity: $0, checkmarkColor: .brand)
             }
             Text("...and all of our upcoming features.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 
     private var yearlyButton: some View {
@@ -127,8 +126,9 @@ struct UpgradeView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
 
-            Text("Save 2 months by subscribing yearly.")
-                .font(.callout)
+            Label("Best value · save 2 months", systemImage: "sparkles")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(Color.brand)
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -146,7 +146,7 @@ struct UpgradeView: View {
             }
 
             Text("A cup of ☕ per month to improve your privacy.")
-                .font(.callout)
+                .font(.footnote)
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }

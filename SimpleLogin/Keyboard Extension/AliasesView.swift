@@ -54,22 +54,23 @@ struct AliasView: View {
     let alias: Alias
 
     var body: some View {
-        Label(title: {
+        HStack(spacing: 6) {
+            if alias.pinned {
+                Image(systemName: "pin.fill")
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+            }
             Text(alias.email)
                 .fontWeight(.medium)
-                .multilineTextAlignment(.center)
-        }, icon: {
-            if alias.pinned {
-                Image(systemName: "bookmark.fill")
-                    .foregroundColor(.brand)
-            }
-        })
+                .lineLimit(1)
+                .truncationMode(.middle)
+        }
         .font(.callout)
         .frame(maxWidth: .infinity, alignment: .center)
-        .fixedSize(horizontal: false, vertical: true)
-        .foregroundColor(alias.enabled ? .primary : .secondary)
-        .padding(8)
-        .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .foregroundStyle(alias.enabled ? Color.primary : Color.secondary)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 14)
+        .glassEffect(.regular.interactive(), in: Capsule())
+        .contentShape(Capsule())
     }
 }

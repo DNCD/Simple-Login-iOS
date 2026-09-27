@@ -1,6 +1,6 @@
 //
 //  AliasContactsView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 20/11/2021.
 //
@@ -27,22 +27,29 @@ struct AliasContactsView: View {
         List {
             Section(header: Text("Create new contact"),
                     footer: createContactSectionFooter) {
-                HStack {
-                    TextField("Contact email", text: $newContactEmail)
+                HStack(spacing: 12) {
+                    Image(systemName: "person.crop.circle.badge.plus")
+                        .font(.title2)
+                        .foregroundStyle(Color.brand)
+                    TextField("name@example.com", text: $newContactEmail)
                         .keyboardType(.emailAddress)
                         .textContentType(.emailAddress)
                         .autocapitalization(.none)
-                        .textFieldStyle(.roundedBorder)
-                    Button("Create") {
+                        .submitLabel(.done)
+                        .onSubmit {
+                            guard !newContactEmail.isEmpty else { return }
+                            viewModel.createContact(contactEmail: newContactEmail)
+                        }
+                    Button("Add") {
                         viewModel.createContact(contactEmail: newContactEmail)
                     }
-                    .foregroundColor(.brand)
+                    .buttonStyle(.glassProminent)
+                    .tint(.brand)
                     .disabled(newContactEmail.isEmpty)
                 }
-                .buttonStyle(.plain)
             }
 
-            Section {
+            Section(content: {
                 if !viewModel.contacts.isEmpty {
                     ForEach(viewModel.contacts, id: \.id) { contact in
                         ContactView(viewModel: viewModel,
@@ -53,10 +60,10 @@ struct AliasContactsView: View {
                             }
                     }
                 } else if !viewModel.isFetchingContacts {
-                    Text("No contacts")
-                        .foregroundColor(.secondary)
-                        .font(.body.italic())
-                        .frame(maxWidth: .infinity, alignment: .center)
+                    ContentUnavailableView("No contacts yet",
+                                           systemImage: "person.2",
+                                           description: Text("Add a contact to send emails from this alias."))
+                        .listRowBackground(Color.clear)
                 }
 
                 if viewModel.isFetchingContacts {
@@ -64,7 +71,11 @@ struct AliasContactsView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                 }
-            }
+            }, header: {
+                if !viewModel.contacts.isEmpty {
+                    Text("Contacts")
+                }
+            })
         }
         .listStyle(.insetGrouped)
         .refreshable { await viewModel.refresh() }
@@ -184,28 +195,31 @@ private struct ContactView: View {
                 }
             }
         }, label: {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(contact.email)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(.leading)
-                    Text("\(contact.creationDateString) (\(contact.relativeCreationDateString))")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .fixedSize(horizontal: false, vertical: false)
-                .opacity(contact.blockForward ? 0.5 : 1)
+            HStack(spacing: 12) {
+                AliasAvatar(email: contact.email, isEnabled: !contact.blockForward, size: 36)
 
-                Spacer()
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(contact.email)
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(contact.blockForward ? Color.secondary : Color.primary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Text("Added \(contact.relativeCreationDateString)")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
 
                 if contact.blockForward {
-                    Text("⛔")
-                        .font(.title)
-                        .padding(.trailing)
+                    Label("Blocked", systemImage: "nosign")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.red)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.red.opacity(0.12), in: Capsule())
                 }
             }
-            .fixedSize(horizontal: false, vertical: false)
+            .contentShape(Rectangle())
         })
     }
 }

@@ -15,8 +15,8 @@ struct CapacityView: View {
         Label {
             Text(capacity.description)
         } icon: {
-            Image(systemName: "checkmark")
-                .foregroundColor(checkmarkColor ?? .primary)
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(checkmarkColor ?? Color.secondary)
         }
         .fixedSize(horizontal: false, vertical: true)
 
