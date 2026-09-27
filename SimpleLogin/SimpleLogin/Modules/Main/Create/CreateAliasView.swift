@@ -8,7 +8,6 @@
 import Combine
 import SimpleLoginPackage
 import SwiftUI
-import SwiftUIIntrospect
 
 struct CreateAliasView: View {
     @Environment(\.presentationMode) private var presentationMode
@@ -108,15 +107,24 @@ private struct ContentView: View {
     private var prefixAndSuffixSection: some View {
         Section(content: {
             VStack(alignment: .leading) {
-                TextField("Custom prefix", text: $viewModel.prefix.animation())
-                    .textFieldStyle(.roundedBorder)
-                    .labelsHidden()
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .foregroundColor(viewModel.prefix.isValidPrefix ? .primary : .red)
-                    .introspect(.textField, on: .iOS(.v15, .v16, .v17)) { textField in
-                        textField.clearButtonMode = .whileEditing
+                HStack {
+                    TextField("Custom prefix", text: $viewModel.prefix.animation())
+                        .labelsHidden()
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .foregroundColor(viewModel.prefix.isValidPrefix ? .primary : .red)
+
+                    if !viewModel.prefix.isEmpty {
+                        Button(action: {
+                            viewModel.prefix = ""
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.tertiary)
+                        })
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel(Text("Clear prefix"))
                     }
+                }
 
                 if !viewModel.prefix.isEmpty, !viewModel.prefix.isValidPrefix {
                     Text("Only lowercase letters, numbers, dot (.), dashes (-) & underscore are supported.")
@@ -125,6 +133,10 @@ private struct ContentView: View {
                         .animation(.default, value: viewModel.prefix)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+            }
+
+            if viewModel.canSuggestPrefixes {
+                prefixSuggestionsView
             }
 
             if let selectedSuffix = viewModel.selectedSuffix {
@@ -160,6 +172,36 @@ private struct ContentView: View {
         }, header: {
             Text("Alias address")
         })
+    }
+
+    private var prefixSuggestionsView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button(action: viewModel.suggestPrefixes) {
+                if viewModel.isSuggestingPrefixes {
+                    Label("Thinking…", systemImage: "sparkles")
+                        .symbolEffect(.pulse)
+                } else {
+                    Label("Suggest with Apple Intelligence", systemImage: "sparkles")
+                }
+            }
+            .buttonStyle(.borderless)
+            .disabled(viewModel.isSuggestingPrefixes)
+
+            if !viewModel.prefixSuggestions.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(viewModel.prefixSuggestions, id: \.self) { suggestion in
+                            Button(suggestion) {
+                                viewModel.prefix = suggestion
+                            }
+                            .buttonStyle(.glass)
+                            .controlSize(.small)
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+            }
+        }
     }
 
     private var notesSection: some View {

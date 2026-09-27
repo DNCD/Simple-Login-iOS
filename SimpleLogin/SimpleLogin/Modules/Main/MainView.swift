@@ -57,29 +57,43 @@ struct MainView: View {
         })
 
         TabView(selection: $selectedItem) {
-            AliasesView(session: session,
-                        reachabilityObserver: reachabilityObserver,
-                        managedObjectContext: managedObjectContext,
-                        createdAlias: $createdAlias,
-                        searchRequested: $searchRequested,
-                        onCreateAlias: showCreateAlias,
-                        onUpgrade: beginUpgradeFlow)
-                .tabItem { TabBarItem.aliases.label }
-                .tag(TabBarItem.aliases)
+            Tab(TabBarItem.aliases.title,
+                systemImage: TabBarItem.aliases.systemImageName,
+                value: TabBarItem.aliases) {
+                AliasesView(session: session,
+                            reachabilityObserver: reachabilityObserver,
+                            managedObjectContext: managedObjectContext,
+                            createdAlias: $createdAlias,
+                            searchRequested: $searchRequested,
+                            onCreateAlias: showCreateAlias,
+                            onUpgrade: beginUpgradeFlow)
+            }
 
-            AdvancedView()
-                .tabItem { TabBarItem.advanced.label }
-                .tag(TabBarItem.advanced)
+            Tab(TabBarItem.advanced.title,
+                systemImage: TabBarItem.advanced.systemImageName,
+                value: TabBarItem.advanced) {
+                AdvancedView()
+            }
 
-            AccountView(session: session,
-                        upgradeNeeded: $upgradeNeeded,
-                        onLogOut: onLogOut)
-                .tabItem { TabBarItem.myAccount.label }
-                .tag(TabBarItem.myAccount)
+            Tab(TabBarItem.myAccount.title,
+                systemImage: TabBarItem.myAccount.systemImageName,
+                value: TabBarItem.myAccount) {
+                AccountView(session: session,
+                            upgradeNeeded: $upgradeNeeded,
+                            onLogOut: onLogOut)
+            }
 
-            SettingsView()
-                .tabItem { TabBarItem.settings.label }
-                .tag(TabBarItem.settings)
+            Tab(TabBarItem.settings.title,
+                systemImage: TabBarItem.settings.systemImageName,
+                value: TabBarItem.settings) {
+                SettingsView()
+            }
+        }
+        .tabViewStyle(.sidebarAdaptable)
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tabViewBottomAccessory {
+            QuickCreateAccessory(onCreateAlias: showCreateAlias,
+                                 onRandomAlias: { handle(.randomAlias) })
         }
         .onChange(of: selectedItem) {
             Vibration.selection.vibrate()
@@ -233,12 +247,56 @@ private struct LockedView: View {
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
                 }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
+                .buttonStyle(.glassProminent)
+                .tint(.brand)
                 .padding(.top, 8)
             }
             .padding()
         }
+    }
+}
+
+/// Shown above the tab bar (and inline when the tab bar is minimized)
+private struct QuickCreateAccessory: View {
+    let onCreateAlias: () -> Void
+    let onRandomAlias: () -> Void
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            content(showsTitles: true)
+            content(showsTitles: false)
+        }
+    }
+
+    private func content(showsTitles: Bool) -> some View {
+        HStack(spacing: 0) {
+            Button(action: onRandomAlias) {
+                label("Random alias", systemImage: "wand.and.stars", showsTitle: showsTitles)
+            }
+
+            Divider()
+                .frame(height: 20)
+
+            Button(action: onCreateAlias) {
+                label("New alias", systemImage: "plus", showsTitle: showsTitles)
+            }
+        }
+        .font(.subheadline.weight(.semibold))
+        .foregroundStyle(Color.brand)
+    }
+
+    private func label(_ title: String, systemImage: String, showsTitle: Bool) -> some View {
+        Group {
+            if showsTitle {
+                Label(title, systemImage: systemImage)
+            } else {
+                Image(systemName: systemImage)
+                    .accessibilityLabel(Text(title))
+            }
+        }
+        .lineLimit(1)
+        .frame(maxWidth: .infinity, minHeight: 44)
+        .contentShape(Rectangle())
     }
 }
 
@@ -272,10 +330,6 @@ enum TabBarItem: String {
         case .settings:
             "gearshape"
         }
-    }
-
-    var label: some View {
-        Label(title, systemImage: systemImageName)
     }
 }
 

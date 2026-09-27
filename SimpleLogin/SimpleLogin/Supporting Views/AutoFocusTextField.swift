@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 15, *)
 struct AutoFocusTextField: View {
     @FocusState private var isFocused: Bool
     var placeholder: String?
@@ -26,7 +25,6 @@ struct AutoFocusTextField: View {
     }
 }
 
-@available(iOS 15, *)
 struct AutoFocusTextEditor: View {
     @FocusState private var isFocused: Bool
     @Binding var text: String
@@ -47,12 +45,6 @@ struct AdaptiveTextEditor: View {
     @Binding var text: String
 
     var body: some View {
-        if #available(iOS 15, *) {
-            AutoFocusTextEditor(text: $text)
-        } else {
-            TextEditor(text: $text)
-                .autocapitalization(.sentences)
-                .disableAutocorrection(true)
-        }
+        AutoFocusTextEditor(text: $text)
     }
 }

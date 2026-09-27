@@ -1,7 +1,7 @@
 ## RelayEmail for iOS
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![iOS 17.0+](https://img.shields.io/badge/iOS-17.0%2B-blue.svg)
-![Swift 5.9](https://img.shields.io/badge/Swift-5.9%2B-orange.svg)
+![iOS 26.0+](https://img.shields.io/badge/iOS-26.0%2B-blue.svg)
+![Xcode 26](https://img.shields.io/badge/Xcode-26%2B-orange.svg)
 
 Protect your inbox with email aliases. RelayEmail is based on the open source
 [SimpleLogin iOS app](https://github.com/simple-login/Simple-Login-iOS).
@@ -11,7 +11,11 @@ Protect your inbox with email aliases. RelayEmail is based on the open source
 
 ### Features
 - Create custom or random aliases, manage mailboxes, custom domains & contacts
-- Swipe actions, context menus, pull to refresh, and a native tab bar (Liquid Glass on iOS 26)
+- Built for iOS 26: Liquid Glass buttons, a tab bar that minimizes while scrolling, a bottom accessory for
+  one-tap "Random alias" / "New alias", and a sidebar on iPad
+- **Apple Intelligence**: on-device alias prefix suggestions when creating an alias (Foundation Models, nothing
+  leaves the device)
+- Swipe actions, context menus, pull to refresh
 - **Siri & Shortcuts**: "Create a random alias with RelayEmail" works out of the box, and can be assigned to the Action button
 - **Home Screen quick actions**: long press the app icon to create a random alias, a custom alias, or search
 - **Spotlight**: search your aliases from the Home Screen and tap a result to copy it

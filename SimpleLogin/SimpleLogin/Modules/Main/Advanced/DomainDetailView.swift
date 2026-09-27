@@ -192,16 +192,7 @@ private struct EditDisplayNameView: View {
             Form {
                 Section(header: Text("Display name"),
                         footer: Text("You can remove display name by leaving this field blank")) {
-                    if #available(iOS 15, *) {
-                        AutoFocusTextField(text: $displayName)
-                            .modifier(ClearButtonModeModifier(mode: .whileEditing))
-                    } else {
-                        TextField("", text: $displayName)
-                            .labelsHidden()
-                            .autocapitalization(.words)
-                            .disableAutocorrection(true)
-                            .modifier(ClearButtonModeModifier(mode: .whileEditing))
-                    }
+                    AutoFocusTextField(text: $displayName)
                 }
             }
             .navigationTitle(viewModel.domain.domainName)

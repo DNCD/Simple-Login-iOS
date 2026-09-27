@@ -169,7 +169,6 @@ struct AliasesView: View {
 
             DetailPlaceholderView.aliasDetails
         }
-        .slNavigationView()
         .onReceive(Just(viewModel.isUpdating)) { isUpdating in
             showingUpdatingAlert = isUpdating
         }
@@ -248,11 +247,6 @@ private extension AliasesView {
             if viewModel.aliases.isEmpty, !viewModel.isLoading, viewModel.error == nil {
                 emptyView
             }
-        }
-        .safeAreaInset(edge: .bottom, alignment: .trailing) {
-            FloatingCreateButton(action: onCreateAlias)
-                .contextMenu { createMenuContent }
-                .padding(20)
         }
         .refreshable { await viewModel.refresh() }
         .animation(.default, value: viewModel.stats != nil)
@@ -389,8 +383,7 @@ private extension AliasesView {
                     Text("Create your first alias")
                         .padding(.horizontal, 8)
                 }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
+                .buttonStyle(.glassProminent)
             })
         case .active:
             ContentUnavailableView("No active aliases",

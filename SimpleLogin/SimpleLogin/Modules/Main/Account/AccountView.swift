@@ -86,7 +86,6 @@ struct AccountView: View {
 
             DetailPlaceholderView(systemIconName: "person")
         }
-        .slNavigationView()
         .disabled(viewModel.isLoading)
         .task { await viewModel.refresh(force: false) }
         .onReceive(Just(viewModel.isInitialized)) { isInitialized in
@@ -219,11 +218,7 @@ private struct UserInfoSection: View {
                 Button(action: {
                     showingEditNameAlert = true
                 }, label: {
-                    if #available(iOS 15, *) {
-                        Label("Edit display name", systemImage: "person.text.rectangle")
-                    } else {
-                        Label("Edit display name", systemImage: "square.and.at.rectangle")
-                    }
+                    Label("Edit display name", systemImage: "person.text.rectangle")
                 })
             }
         }, label: {
@@ -481,14 +476,7 @@ private struct EditDisplayNameView: View {
         NavigationView {
             Form {
                 Section(header: Text("Display name")) {
-                    if #available(iOS 15, *) {
-                        AutoFocusTextField(text: $displayName)
-                    } else {
-                        TextField("", text: $displayName)
-                            .labelsHidden()
-                            .autocapitalization(.words)
-                            .disableAutocorrection(true)
-                    }
+                    AutoFocusTextField(text: $displayName)
                 }
             }
             .navigationTitle(viewModel.userInfo.email)

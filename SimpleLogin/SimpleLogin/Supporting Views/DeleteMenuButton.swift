@@ -16,10 +16,6 @@ struct DeleteMenuButton: View {
             Vibration.warning.vibrate(fallBackToOldSchool: true)
             action()
         }
-        if #available(iOS 15.0, *) {
-            Button(role: .destructive, action: hapticAction, label: label)
-        } else {
-            Button(action: hapticAction, label: label)
-        }
+        Button(role: .destructive, action: hapticAction, label: label)
     }
 }

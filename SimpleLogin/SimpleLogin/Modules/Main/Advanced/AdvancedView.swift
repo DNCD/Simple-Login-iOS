@@ -42,7 +42,6 @@ struct AdvancedView: View {
             DetailPlaceholderView(systemIconName: "circle.grid.cross",
                                   message: "Select a menu to see its details here")
         }
-        .slNavigationView()
         .betterSafariView(urlString: $selectedUrlString)
     }
 

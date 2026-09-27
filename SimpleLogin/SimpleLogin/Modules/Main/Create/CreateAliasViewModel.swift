@@ -1,6 +1,6 @@
 //
 //  CreateAliasViewModel.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 19/11/2021.
 //
@@ -19,9 +19,16 @@ final class CreateAliasViewModel: ObservableObject {
     @Published var selectedSuffix: Suffix?
     @Published var mailboxIds = [Int]()
     @Published var notes = ""
+    @Published private(set) var prefixSuggestions = [String]()
+    @Published private(set) var isSuggestingPrefixes = false
 
     private let session: Session
     private let mode: CreateAliasView.Mode?
+
+    /// Apple Intelligence prefix suggestions are available on this device
+    var canSuggestPrefixes: Bool {
+        AliasPrefixSuggester.isAvailable
+    }
 
     var canCreate: Bool {
         prefix.isValidPrefix && !mailboxIds.isEmpty && selectedSuffix != nil
@@ -77,6 +84,27 @@ final class CreateAliasViewModel: ObservableObject {
                                                                              name: nil),
                                                               hostname: nil)
                 createdAlias = try await session.execute(createAliasEndpoint)
+            } catch {
+                self.error = error
+            }
+        }
+    }
+
+    func suggestPrefixes() {
+        guard !isSuggestingPrefixes else { return }
+        let context = [notes, prefix]
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+        Task { @MainActor in
+            defer { isSuggestingPrefixes = false }
+            isSuggestingPrefixes = true
+            do {
+                let suggestions = try await AliasPrefixSuggester
+                    .suggestPrefixes(for: context.isEmpty ? "signing up to a new website" : context)
+                withAnimation {
+                    prefixSuggestions = suggestions
+                }
             } catch {
                 self.error = error
             }

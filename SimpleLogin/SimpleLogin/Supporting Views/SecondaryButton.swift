@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Regular Liquid Glass button
 struct SecondaryButton: View {
     let title: String
     let action: () -> Void
@@ -16,11 +17,9 @@ struct SecondaryButton: View {
             Text(title)
                 .font(.headline)
                 .foregroundStyle(Color.brand)
-                .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color.brand.opacity(0.12),
-                            in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .frame(maxWidth: .infinity)
         }
-        .buttonStyle(PressableButtonStyle())
+        .buttonStyle(.glass)
+        .controlSize(.extraLarge)
     }
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
+/// Prominent Liquid Glass button tinted with the brand color
 struct PrimaryButton: View {
-    @Environment(\.isEnabled) private var isEnabled
     let title: String
     let action: () async -> Void
 
@@ -20,23 +20,10 @@ struct PrimaryButton: View {
         }, label: {
             Text(title)
                 .font(.headline)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity, minHeight: 52)
-                .background(LinearGradient.brand,
-                            in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Color.brand.opacity(isEnabled ? 0.3 : 0), radius: 10, y: 4)
-                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .frame(maxWidth: .infinity)
         })
-        .buttonStyle(PressableButtonStyle())
-    }
-}
-
-/// Subtle scale-down effect when pressed, like system buttons
-struct PressableButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .opacity(configuration.isPressed ? 0.9 : 1)
-            .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
+        .buttonStyle(.glassProminent)
+        .controlSize(.extraLarge)
+        .tint(.brand)
     }
 }

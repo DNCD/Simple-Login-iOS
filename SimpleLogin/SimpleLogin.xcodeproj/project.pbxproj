@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		667AB851830A3308A9D25AC2 /* AliasPrefixSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */; };
+		72CA3D584C6288F266AE30E9 /* AliasPrefixSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */; };
 		753FC192D52A3000F9BA81A3 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5063EA992DEC09DC7F84429 /* AppRouter.swift */; };
 		EDA61BA3964DDEF3DDE083F4 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */; };
 		614465079CAFB3A50026A449 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43E39B324973C34F85391DF /* AppearanceMode.swift */; };
 		B7FB101768BA29B3C9A6A174 /* AliasTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB193044DF69FC8C90D1D0 /* AliasTips.swift */; };
-		9021D83E04ABAE22C144500C /* FloatingCreateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */; };
 		8712F7E9D3638B69B5F4DF67 /* RelayEmailIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */; };
 		350D53862AA87EA4000C342C /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 350D53852AA87EA4000C342C /* SwiftUIIntrospect */; };
 		350D53882AA87EF9000C342C /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 350D53872AA87EF9000C342C /* SwiftUIIntrospect */; };
@@ -33,7 +34,6 @@
 		C00A563626DAC6D000A550A2 /* ApiUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A563526DAC6D000A550A2 /* ApiUrlView.swift */; };
 		C00A563826DAD9E000A550A2 /* OtpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A563726DAD9E000A550A2 /* OtpView.swift */; };
 		C00DF9AA279175770065A602 /* DomainDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DF9A9279175770065A602 /* DomainDetailView.swift */; };
-		C00E66692792C687002DBA67 /* ClearButtonModeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E66682792C687002DBA67 /* ClearButtonModeModifier.swift */; };
 		C00FD7FD27AA70E40072DD67 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00FD7FC27AA70E40072DD67 /* TipsView.swift */; };
 		C00FD80127AA71E80072DD67 /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00FD80027AA71E80072DD67 /* Tip.swift */; };
 		C010031527A73637009735CD /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C010031427A73637009735CD /* KeyboardViewController.swift */; };
@@ -92,7 +92,6 @@
 		C04BB63727AC7E7000AA29A1 /* KeyboardExtensionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BB63627AC7E7000AA29A1 /* KeyboardExtensionMode.swift */; };
 		C04BB63827AC7E7000AA29A1 /* KeyboardExtensionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BB63627AC7E7000AA29A1 /* KeyboardExtensionMode.swift */; };
 		C04BB63927AC7E7000AA29A1 /* KeyboardExtensionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BB63627AC7E7000AA29A1 /* KeyboardExtensionMode.swift */; };
-		C05424B527B06955008048A5 /* SLNavigationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05424B427B06955008048A5 /* SLNavigationViewModifier.swift */; };
 		C0542ABE27AEDF3B00188C63 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0542ABD27AEDF3B00188C63 /* BaseViewController.swift */; };
 		C05A4CDE273C6C73005F8CC5 /* AutoFocusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4CDD273C6C73005F8CC5 /* AutoFocusTextField.swift */; };
 		C05A9B15277BB996003FD0A7 /* UpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A9B14277BB996003FD0A7 /* UpgradeView.swift */; };
@@ -241,11 +240,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasPrefixSuggester.swift; sourceTree = "<group>"; };
 		D5063EA992DEC09DC7F84429 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
 		B43E39B324973C34F85391DF /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		92AB193044DF69FC8C90D1D0 /* AliasTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasTips.swift; sourceTree = "<group>"; };
-		5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCreateButton.swift; sourceTree = "<group>"; };
 		A5F3F35508BCDB61F83FB5F5 /* RelayEmailIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayEmailIntents.swift; sourceTree = "<group>"; };
 		35373C44289177DA00000297 /* LogInWithProtonButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInWithProtonButtonView.swift; sourceTree = "<group>"; };
 		35373C4628917A4900000297 /* ProtonButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonButtonStyle.swift; sourceTree = "<group>"; };
@@ -259,7 +258,6 @@
 		C00A563526DAC6D000A550A2 /* ApiUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUrlView.swift; sourceTree = "<group>"; };
 		C00A563726DAD9E000A550A2 /* OtpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpView.swift; sourceTree = "<group>"; };
 		C00DF9A9279175770065A602 /* DomainDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainDetailView.swift; sourceTree = "<group>"; };
-		C00E66682792C687002DBA67 /* ClearButtonModeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonModeModifier.swift; sourceTree = "<group>"; };
 		C00FD7FC27AA70E40072DD67 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
 		C00FD80027AA71E80072DD67 /* Tip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 		C010031227A73636009735CD /* Keyboard Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Keyboard Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,7 +308,6 @@
 		C04848A8278CE50700702E8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C04BB63227AC7D7E00AA29A1 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		C04BB63627AC7E7000AA29A1 /* KeyboardExtensionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtensionMode.swift; sourceTree = "<group>"; };
-		C05424B427B06955008048A5 /* SLNavigationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLNavigationViewModifier.swift; sourceTree = "<group>"; };
 		C0542ABD27AEDF3B00188C63 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C05A4CDD273C6C73005F8CC5 /* AutoFocusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFocusTextField.swift; sourceTree = "<group>"; };
 		C05A9B14277BB996003FD0A7 /* UpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView.swift; sourceTree = "<group>"; };
@@ -693,13 +690,11 @@
 		C0AAE98C26E4150200247742 /* Supporting Views */ = {
 			isa = PBXGroup;
 			children = (
-				5C59D2E363DA88BB033C116A /* FloatingCreateButton.swift */,
 				EF6FEA6D27B8358800557158 /* AlertToastModifier.swift */,
 				C05A4CDD273C6C73005F8CC5 /* AutoFocusTextField.swift */,
 				EFFBBDE527C96CCA00C8E6DD /* BetterSafariViewModifier.swift */,
 				C0AAE98D26E4152A00247742 /* Blur.swift */,
 				EFDF83A428157C1A002ED668 /* BorderedText.swift */,
-				C00E66682792C687002DBA67 /* ClearButtonModeModifier.swift */,
 				C02CD1972794C20400B3115E /* ConfettiableModifier.swift */,
 				EF68E11727B90E9400396472 /* DeleteMenuButton.swift */,
 				C0EA747827B3061100848F58 /* DetailPlaceholderView.swift */,
@@ -716,7 +711,6 @@
 				EF509E3327C234D10047A8D1 /* SensitiveContentViewModifier.swift */,
 				C02F967126DB78CF000B100C /* ShakeEffect.swift */,
 				C0F08FB227AB2CB50066A354 /* ShareSheetView.swift */,
-				C05424B427B06955008048A5 /* SLNavigationViewModifier.swift */,
 				EF9FE0E228140A7F003B3CB8 /* TextFieldAlert.swift */,
 				C0F732B0278F6674004608DB /* URLButton.swift */,
 			);
@@ -726,6 +720,7 @@
 		C0CBE93B26B9D067004833F6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B5BD3EE78D262A735CAC8D47 /* AliasPrefixSuggester.swift */,
 				B43E39B324973C34F85391DF /* AppearanceMode.swift */,
 				C45F8DCF25DCC04BDE8C6F9A /* SpotlightIndexer.swift */,
 				D5063EA992DEC09DC7F84429 /* AppRouter.swift */,
@@ -1064,8 +1059,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72CA3D584C6288F266AE30E9 /* AliasPrefixSuggester.swift in Sources */,
 				8712F7E9D3638B69B5F4DF67 /* RelayEmailIntents.swift in Sources */,
-				9021D83E04ABAE22C144500C /* FloatingCreateButton.swift in Sources */,
 				B7FB101768BA29B3C9A6A174 /* AliasTips.swift in Sources */,
 				614465079CAFB3A50026A449 /* AppearanceMode.swift in Sources */,
 				EDA61BA3964DDEF3DDE083F4 /* SpotlightIndexer.swift in Sources */,
@@ -1120,10 +1115,8 @@
 				EFD8D85927D7EBA500C733EB /* LocalMailboxLiteExtensions.swift in Sources */,
 				C04266D327944E130053451B /* Vibration.swift in Sources */,
 				C0CBE93A26B9BF5C004833F6 /* EmailPasswordView.swift in Sources */,
-				C05424B527B06955008048A5 /* SLNavigationViewModifier.swift in Sources */,
 				C0F1964027348EDA0062B418 /* AliasDetailViewModel.swift in Sources */,
 				C079864A26B34D5F006C9FC0 /* LogInView.swift in Sources */,
-				C00E66692792C687002DBA67 /* ClearButtonModeModifier.swift in Sources */,
 				C087656027AE7A5C00FF26E6 /* SearchAliasesResultView.swift in Sources */,
 				EF89C3602808BBB000F48743 /* SuffixExtensions.swift in Sources */,
 				35C72EE62B734C46002C93BD /* StatsView.swift in Sources */,
@@ -1205,6 +1198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667AB851830A3308A9D25AC2 /* AliasPrefixSuggester.swift in Sources */,
 				EFB0B65227F0FE89006D3A7F /* SecondaryButton.swift in Sources */,
 				C00874B527A989D3004F32FA /* SLError.swift in Sources */,
 				C0941EE427A6E6DE009AAEBC /* Session.swift in Sources */,
@@ -1283,7 +1277,7 @@
 				INFOPLIST_FILE = "Keyboard Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1311,7 +1305,7 @@
 				INFOPLIST_FILE = "Keyboard Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1378,7 +1372,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1433,7 +1427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1456,7 +1450,7 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SimpleLogin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1482,7 +1476,7 @@
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SimpleLogin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1504,7 +1498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				INFOPLIST_FILE = SimpleLoginTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1528,7 +1522,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72VC334CSX;
 				INFOPLIST_FILE = SimpleLoginTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1594,7 +1588,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1622,7 +1616,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RelayEmail;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

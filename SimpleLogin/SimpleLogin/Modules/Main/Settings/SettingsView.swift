@@ -38,7 +38,6 @@ struct SettingsView: View {
                 }
             }
         }
-        .slNavigationView()
         .alertToastMessage($localAuthenticator.message)
         .alertToastError($localAuthenticator.error)
     }
@@ -62,11 +61,7 @@ private struct BiometricAuthenticationSection: View {
                         Label {
                             Text("Ultra-protection")
                         } icon: {
-                            if #available(iOS 15, *) {
-                                Image(systemName: "bolt.shield")
-                            } else {
-                                Image(systemName: "shield")
-                            }
+                            Image(systemName: "bolt.shield")
                         }
                     }
                     .toggleStyle(SwitchToggleStyle(tint: .brand))
