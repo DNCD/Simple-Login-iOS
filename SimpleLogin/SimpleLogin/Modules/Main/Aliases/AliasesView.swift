@@ -115,18 +115,24 @@ struct AliasesView: View {
                     aliasesList(proxy: proxy)
                 }
                 .ignoresSafeArea(.keyboard)
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Aliases")
+                .navigationBarTitleDisplayMode(.large)
                 .offlineLabelled(reachable: viewModel.reachabilityObserver.reachable)
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Picker("", selection: $viewModel.selectedStatus) {
-                            ForEach(AliasStatus.allCases, id: \.self) { status in
-                                Text(status.description)
-                                    .tag(status)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Menu(content: {
+                            Picker("Show", selection: $viewModel.selectedStatus) {
+                                ForEach(AliasStatus.allCases, id: \.self) { status in
+                                    Label(status.description, systemImage: status.systemImageName)
+                                        .tag(status)
+                                }
                             }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .labelsHidden()
+                            .pickerStyle(.inline)
+                        }, label: {
+                            Label("Filter",
+                                  systemImage: viewModel.selectedStatus == .all ?
+                                      "line.3.horizontal.decrease" : "line.3.horizontal.decrease.circle.fill")
+                        })
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -194,55 +200,36 @@ private extension AliasesView {
     func aliasesList(proxy: ScrollViewProxy) -> some View {
         List {
             if let stats = viewModel.stats {
-                StatsView(stats: stats)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+                Section {
+                    StatsView(stats: stats)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                }
             }
 
             if !viewModel.aliases.isEmpty {
-                TipView(swipeActionsTip)
-                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-
-                if let createdAlias {
-                    switch (createdAlias.enabled, viewModel.selectedStatus) {
-                    case (false, .inactive), (true, .active), (true, .all):
-                        aliasCompactView(for: createdAlias)
-                    default:
-                        EmptyView()
-                    }
+                Section {
+                    TipView(swipeActionsTip)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
                 }
+                .listSectionSpacing(.compact)
 
-                ForEach(viewModel.aliases, id: \.id) { alias in
-                    if alias.id == createdAlias?.id {
-                        EmptyView()
-                    } else {
-                        // swiftlint:disable:next todo
-                        // TODO: Workaround a SwiftUI bug
-                        // that doesn't update AliasCompactView's context menu
-                        // https://stackoverflow.com/a/70159934
-                        if alias.pinned {
-                            aliasCompactView(for: alias)
-                        } else {
-                            aliasCompactView(for: alias)
-                        }
-                    }
-                }
+                Section(content: {
+                    aliasRows
+                }, header: {
+                    Text(viewModel.selectedStatus.sectionTitle)
+                })
             }
 
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity)
-                    .padding()
-                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
             }
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color(.systemGroupedBackground))
+        .listStyle(.insetGrouped)
+        .listSectionSpacing(.compact)
         .overlay {
             if viewModel.aliases.isEmpty, !viewModel.isLoading, viewModel.error == nil {
                 emptyView
@@ -266,6 +253,34 @@ private extension AliasesView {
         .onReceive(Just(viewModel.updatedAlias)) { updatedAlias in
             if let updatedAlias, updatedAlias.id == createdAlias?.id {
                 createdAlias = updatedAlias
+            }
+        }
+    }
+
+    @ViewBuilder
+    var aliasRows: some View {
+        if let createdAlias {
+            switch (createdAlias.enabled, viewModel.selectedStatus) {
+            case (false, .inactive), (true, .active), (true, .all):
+                aliasCompactView(for: createdAlias)
+            default:
+                EmptyView()
+            }
+        }
+
+        ForEach(viewModel.aliases, id: \.id) { alias in
+            if alias.id == createdAlias?.id {
+                EmptyView()
+            } else {
+                // swiftlint:disable:next todo
+                // TODO: Workaround a SwiftUI bug
+                // that doesn't update AliasCompactView's context menu
+                // https://stackoverflow.com/a/70159934
+                if alias.pinned {
+                    aliasCompactView(for: alias)
+                } else {
+                    aliasCompactView(for: alias)
+                }
             }
         }
     }
@@ -307,15 +322,8 @@ private extension AliasesView {
                              selectedAlias = alias
                              selectedLink = .details
                          }
-                         .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                         .listRowSeparator(.hidden)
-                         .listRowBackground(
-                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                 .fill(hightlight ?
-                                     Color.brand.opacity(0.15) : Color(.secondarySystemGroupedBackground))
-                                 .padding(.horizontal, 12)
-                                 .padding(.vertical, 5)
-                         )
+                         .listRowBackground(hightlight ?
+                             Color.brand.opacity(0.15) : Color(.secondarySystemGroupedBackground))
                          .swipeActions(edge: .leading, allowsFullSwipe: true) {
                              Button {
                                  Vibration.soft.vibrate()
@@ -405,6 +413,22 @@ enum AliasStatus: CustomStringConvertible, CaseIterable {
         case .all: "All"
         case .active: "Active"
         case .inactive: "Inactive"
+        }
+    }
+
+    var sectionTitle: String {
+        switch self {
+        case .all: "All aliases"
+        case .active: "Active aliases"
+        case .inactive: "Inactive aliases"
+        }
+    }
+
+    var systemImageName: String {
+        switch self {
+        case .all: "tray.full"
+        case .active: "checkmark.circle"
+        case .inactive: "pause.circle"
         }
     }
 }

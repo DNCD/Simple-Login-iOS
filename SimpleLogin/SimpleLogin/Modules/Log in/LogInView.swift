@@ -134,6 +134,8 @@ struct LogInView: View {
                 .safeAreaInset(edge: .top) { topView }
             }
         }
+        .environment(\.colorScheme, .dark)
+        .tint(.white)
         .animation(.default, value: viewModel.isShowingKeyboard)
         .animation(.default, value: launching)
         .onReceive(Just(preferences.apiUrl)) { apiUrl in
@@ -176,16 +178,8 @@ struct LogInView: View {
     }
 
     private var backgroundView: some View {
-        ZStack {
-            Color(.systemGroupedBackground)
-            LinearGradient.brand
-                .opacity(0.25)
-                .frame(height: 360)
-                .blur(radius: 80)
-                .offset(y: -160)
-                .frame(maxHeight: .infinity, alignment: .top)
-        }
-        .ignoresSafeArea()
+        BrandMeshBackground()
+            .overlay(Color.black.opacity(0.15).ignoresSafeArea())
     }
 
     private var topView: some View {

@@ -132,10 +132,7 @@ struct EmailPasswordView: View {
                 }
             }
             .padding(16)
-            .background(Color(.secondarySystemGroupedBackground),
-                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(Color.primary.opacity(0.06), lineWidth: 1))
+            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
 
             PrimaryButton(title: mode.title) {
                 switch mode {

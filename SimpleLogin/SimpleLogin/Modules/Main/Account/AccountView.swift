@@ -1,6 +1,6 @@
 //
 //  AccountView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 02/09/2021.
 //
@@ -57,7 +57,7 @@ struct AccountView: View {
                 .refreshable { await viewModel.refresh(force: true) }
                 .ignoresSafeArea(.keyboard)
                 .environmentObject(viewModel)
-                .navigationTitle("My Account")
+                .navigationTitle("Account")
                 .navigationBarItems(trailing: trailingButton)
                 .onAppear {
                     if upgradeNeeded, !showingUpgradeView {
@@ -152,32 +152,40 @@ private struct UserInfoSection: View {
 
     var body: some View {
         Section {
-            HStack {
-                let imageWidth = min(64, UIScreen.main.bounds.width / 7)
-                if let profilePictureUrl = viewModel.userInfo.profilePictureUrl {
-                    KFImage.url(URL(string: profilePictureUrl))
-                        .placeholder { defaultAvatarImage }
-                        .loadDiskFileSynchronously()
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: imageWidth, height: imageWidth)
-                        .clipShape(Circle())
-                } else {
-                    defaultAvatarImage
-                }
-
-                VStack(alignment: .leading) {
-                    if !viewModel.userInfo.name.isEmpty {
-                        Text(viewModel.userInfo.name)
-                            .fontWeight(.semibold)
+            VStack(spacing: 10) {
+                Group {
+                    if let profilePictureUrl = viewModel.userInfo.profilePictureUrl {
+                        KFImage.url(URL(string: profilePictureUrl))
+                            .placeholder { defaultAvatarImage }
+                            .loadDiskFileSynchronously()
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        defaultAvatarImage
                     }
-                    Text(viewModel.userInfo.email)
+                }
+                .frame(width: 88, height: 88)
+                .clipShape(Circle())
+                .overlay(alignment: .bottomTrailing) {
+                    editMenu
                 }
 
-                Spacer()
+                VStack(spacing: 2) {
+                    Text(displayName)
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .multilineTextAlignment(.center)
+                    if !viewModel.userInfo.name.isEmpty {
+                        Text(viewModel.userInfo.email)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
 
-                editMenu
+                planBadge
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+            .listRowBackground(Color.clear)
             .alert(isPresented: $viewModel.askingForSettings) {
                 settingsAlert
             }
@@ -191,11 +199,35 @@ private struct UserInfoSection: View {
     }
 
     private var defaultAvatarImage: some View {
-        Image(systemName: "person.crop.circle.fill")
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(.brand)
-            .frame(width: min(64, UIScreen.main.bounds.width / 7))
+        AliasAvatar(email: displayName, size: 88)
+    }
+
+    private var displayName: String {
+        viewModel.userInfo.name.isEmpty ? viewModel.userInfo.email : viewModel.userInfo.name
+    }
+
+    private var planBadge: some View {
+        let userInfo = viewModel.userInfo
+        let title: String
+        let systemImageName: String
+
+        if userInfo.inTrial {
+            title = "Premium trial"
+            systemImageName = "hourglass"
+        } else if userInfo.isPremium {
+            title = "Premium"
+            systemImageName = "crown.fill"
+        } else {
+            title = "Free plan"
+            systemImageName = "person.fill"
+        }
+
+        return Label(title, systemImage: systemImageName)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(userInfo.isPremium ? Color.orange : Color.secondary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .glassEffect(.regular, in: Capsule())
     }
 
     private var editMenu: some View {
@@ -222,7 +254,13 @@ private struct UserInfoSection: View {
                 })
             }
         }, label: {
-            Image(systemName: "square.and.pencil")
+            Image(systemName: "pencil")
+                .font(.footnote.weight(.bold))
+                .foregroundStyle(.white)
+                .frame(width: 30, height: 30)
+                .background(Color.brand, in: Circle())
+                .overlay(Circle().stroke(Color(.systemGroupedBackground), lineWidth: 3))
+                .accessibilityLabel(Text("Edit profile"))
         })
         .disabled(viewModel.isLoading)
     }
@@ -254,7 +292,8 @@ private struct NewslettersSection: View {
     var body: some View {
         Section(footer: Text("We will occasionally send you emails with new feature announcements")) {
             Toggle(isOn: $viewModel.notification) {
-                Label("Newsletters", systemImage: "newspaper")
+                Label("Newsletters", systemImage: "newspaper.fill")
+                    .labelStyle(.tile(.orange))
             }
             .toggleStyle(SwitchToggleStyle(tint: .brand))
         }

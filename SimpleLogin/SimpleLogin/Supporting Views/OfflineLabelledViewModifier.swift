@@ -7,29 +7,29 @@
 
 import SwiftUI
 
+/// Shows a floating "You're offline" pill on top of the content
 struct OfflineLabelledViewModifier: ViewModifier {
-    @State private var noConnectionViewSize: CGSize = .zero
-    @Binding var reachable: Bool
+    let reachable: Bool
 
     func body(content: Content) -> some View {
-        ZStack(alignment: .top) {
-            content
-                .padding(.top, reachable ? 0 : noConnectionViewSize.height)
-            if !reachable {
-                Text("You're offline")
-                    .font(.caption2)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(Color.red)
-                    .bindSize($noConnectionViewSize)
+        content
+            .overlay(alignment: .top) {
+                if !reachable {
+                    Label("You're offline", systemImage: "wifi.slash")
+                        .font(.footnote.weight(.semibold))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .glassEffect(.regular.tint(Color.red.opacity(0.35)), in: Capsule())
+                        .padding(.top, 4)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
             }
-        }
+            .animation(.spring, value: reachable)
     }
 }
 
 extension View {
     func offlineLabelled(reachable: Bool) -> some View {
-        modifier(OfflineLabelledViewModifier(reachable: .constant(reachable)))
+        modifier(OfflineLabelledViewModifier(reachable: reachable))
     }
 }

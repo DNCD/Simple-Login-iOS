@@ -21,80 +21,47 @@ struct AliasCompactView: View {
     let onDelete: () -> Void
 
     var body: some View {
-        VStack(spacing: 8) {
-            Label {
-                Text(alias.email)
-                    .foregroundColor(alias.enabled ? .primary : .secondary)
-            } icon: {
-                if alias.pinned {
-                    Image(systemName: "pin.fill")
-                        .foregroundStyle(.orange)
+        HStack(alignment: displayMode == .compact ? .center : .top, spacing: 12) {
+            AliasAvatar(email: alias.email,
+                        isEnabled: alias.enabled,
+                        size: displayMode == .compact ? 32 : 40)
+
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 6) {
+                    Text(alias.email)
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(alias.enabled ? Color.primary : Color.secondary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+
+                    if alias.pinned {
+                        Image(systemName: "pin.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.orange)
+                            .accessibilityLabel(Text("Pinned"))
+                    }
+                }
+
+                if displayMode != .compact {
+                    subtitle
+                }
+
+                if displayMode == .default, !alias.noActivities {
+                    ActivitiesView(alias: alias)
+                        .padding(.top, 2)
                 }
             }
-            .font(.headline)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .fixedSize(horizontal: false, vertical: true)
 
-            if displayMode != .compact {
-                if let activity = alias.latestActivity {
-                    Label(title: {
-                        HStack {
-                            Text(activity.contact.email)
-                            Text("(\(activity.relativeDateString))")
-                        }
-                        .foregroundColor(.secondary)
-                    }, icon: {
-                        Image(systemName: activity.action.iconSystemName)
-                            .foregroundColor(activity.action.color)
-                    })
-                    .font(.caption)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                } else {
-                    Label("\(alias.creationDateString) (\(alias.relativeCreationDateString))",
-                          systemImage: "clock.fill")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-
-            if displayMode != .compact {
-                Label(alias.mailboxesString, systemImage: "tray.full.fill")
-                    .lineLimit(3)
-                    .font(.caption)
-                    .foregroundColor(Color.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            if !alias.noActivities, displayMode == .default {
-                ActivitiesView(alias: alias)
-                    .padding(.leading)
-            }
-
-            if let note = alias.note, !note.isEmpty {
-                Label(title: {
-                    Text(note)
-                        .lineLimit(2)
-                }, icon: {
-                    Image(systemName: "square.and.pencil")
-                })
-                .font(.caption)
-                .foregroundColor(Color.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .fixedSize(horizontal: false, vertical: true)
-            }
-
-            ActionsView(alias: alias,
-                        onCopy: onCopy,
-                        onSendMail: onSendMail,
-                        onToggle: onToggle)
+            Toggle("Active", isOn: Binding(get: {
+                alias.enabled
+            }, set: { _ in
+                onToggle()
+            }))
+            .labelsHidden()
+            .tint(.brand)
         }
-        .padding(8)
-        .opacity(alias.enabled ? 1 : 0.5)
-        .fixedSize(horizontal: false, vertical: true)
+        .padding(.vertical, 4)
         .contentShape(Rectangle())
         .fullScreenCover(isPresented: $showingAliasEmailFullScreen) {
             AliasEmailView(email: alias.email)
@@ -110,6 +77,10 @@ struct AliasCompactView: View {
 
                 ShareLink(item: alias.email) {
                     Label("Share", systemImage: "square.and.arrow.up")
+                }
+
+                Button(action: onSendMail) {
+                    Label.contacts
                 }
             }
 
@@ -144,85 +115,71 @@ struct AliasCompactView: View {
     }
 }
 
+private extension AliasCompactView {
+    @ViewBuilder
+    var subtitle: some View {
+        Group {
+            if let note = alias.note, !note.isEmpty {
+                Label(note, systemImage: "note.text")
+            } else if let activity = alias.latestActivity {
+                Label {
+                    Text("\(activity.contact.email) · \(activity.relativeDateString)")
+                } icon: {
+                    Image(systemName: activity.action.iconSystemName)
+                        .foregroundStyle(activity.action.color)
+                }
+            } else {
+                Label("Created \(alias.relativeCreationDateString)", systemImage: "clock")
+            }
+        }
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .lineLimit(1)
+        .labelStyle(CompactLabelStyle())
+    }
+}
+
+/// Icon + title with a tight spacing, for secondary lines
+private struct CompactLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 4) {
+            configuration.icon
+                .font(.caption)
+            configuration.title
+        }
+    }
+}
+
 private struct ActivitiesView: View {
     let alias: Alias
 
     var body: some View {
         HStack(spacing: 12) {
-            section(action: .forward, count: alias.forwardCount)
-            Divider()
-            section(action: .reply, count: alias.replyCount)
-            Divider()
-            section(action: .block, count: alias.blockCount)
-            Spacer()
+            metric(action: .forward, count: alias.forwardCount)
+            metric(action: .reply, count: alias.replyCount)
+            metric(action: .block, count: alias.blockCount)
         }
-        .fixedSize(horizontal: false, vertical: true)
+        .font(.caption.weight(.medium))
+        .monospacedDigit()
     }
 
-    private func section(action: ActivityAction, count: Int) -> some View {
-        VStack {
-            Text(action.title)
-                .fontWeight(.semibold)
-                .font(.caption2)
-                .foregroundColor(action.color)
-
+    private func metric(action: ActivityAction, count: Int) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: action.iconSystemName)
+                .foregroundStyle(action.color)
             Text("\(count)")
-                .font(.headline)
-                .fontWeight(.bold)
-                // swiftlint:disable:next empty_count
-                .opacity(count == 0 ? 0.5 : 1)
-
-            Spacer()
+                .foregroundStyle(.secondary)
         }
-    }
-}
-
-private struct ActionsView: View {
-    let alias: Alias
-    let onCopy: () -> Void
-    let onSendMail: () -> Void
-    let onToggle: () -> Void
-
-    var body: some View {
-        HStack {
-            Button {
-                onCopy()
-            } label: {
-                Label.copy
-            }
-            .buttonStyle(.plain)
-
-            Spacer()
-
-            Button {
-                onSendMail()
-            } label: {
-                Label.contacts
-            }
-            .buttonStyle(.plain)
-
-            Spacer()
-
-            Button {
-                onToggle()
-            } label: {
-                Label("Active", systemImage: alias.enabled ? "checkmark.circle.fill" : "circle.dashed")
-                    .foregroundColor(alias.enabled ? .accentColor : Color(.darkGray))
-            }
-            .buttonStyle(.plain)
-
-            Spacer()
-        }
-        .font(.subheadline)
-        .foregroundColor(.accentColor)
-        .lineLimit(1)
-        .minimumScaleFactor(0.8)
+        // swiftlint:disable:next empty_count
+        .opacity(count == 0 ? 0.5 : 1)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("\(count) \(action.title)"))
     }
 }
 
 struct AliasCompactView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
+        List {
             AliasCompactView(alias: .ccohen,
                              onCopy: {},
                              onSendMail: {},

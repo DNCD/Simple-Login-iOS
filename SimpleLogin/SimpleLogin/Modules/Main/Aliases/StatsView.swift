@@ -25,30 +25,32 @@ import SwiftUI
 struct StatsView: View {
     let stats: Stats
 
-    private let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
-
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 12) {
-            cell(title: "Aliases",
-                 description: "All time",
-                 systemImageName: "at",
-                 color: .brand,
-                 count: stats.aliasCount)
-            cell(title: "Forwarded",
-                 description: "Last 14 days",
-                 systemImageName: "arrowshape.turn.up.right.fill",
-                 color: .green,
-                 count: stats.forwardCount)
-            cell(title: "Replies",
-                 description: "Last 14 days",
-                 systemImageName: "arrowshape.turn.up.left.fill",
-                 color: .blue,
-                 count: stats.replyCount)
-            cell(title: "Blocked",
-                 description: "Last 14 days",
-                 systemImageName: "hand.raised.fill",
-                 color: .red,
-                 count: stats.blockCount)
+        Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+            GridRow {
+                cell(title: "Aliases",
+                     description: "All time",
+                     systemImageName: "at",
+                     color: .brand,
+                     count: stats.aliasCount)
+                cell(title: "Forwarded",
+                     description: "Last 14 days",
+                     systemImageName: "paperplane.fill",
+                     color: .green,
+                     count: stats.forwardCount)
+            }
+            GridRow {
+                cell(title: "Replies",
+                     description: "Last 14 days",
+                     systemImageName: "arrowshape.turn.up.left.fill",
+                     color: .blue,
+                     count: stats.replyCount)
+                cell(title: "Blocked",
+                     description: "Last 14 days",
+                     systemImageName: "nosign",
+                     color: .red,
+                     count: stats.blockCount)
+            }
         }
     }
 }
@@ -67,8 +69,8 @@ private extension StatsView {
                     .frame(width: 28, height: 28)
                     .background(color.gradient, in: Circle())
                 Spacer()
-                Text("\(count)")
-                    .font(.title2.weight(.bold))
+                Text(count, format: .number.notation(.compactName))
+                    .font(.system(.title2, design: .rounded, weight: .bold))
                     .monospacedDigit()
                     .contentTransition(.numericText())
             }
@@ -81,7 +83,7 @@ private extension StatsView {
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.secondarySystemGroupedBackground),
-                    in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

@@ -1,6 +1,6 @@
 //
 //  AdvancedView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 02/09/2021.
 //
@@ -24,6 +24,7 @@ struct AdvancedView: View {
                                    },
                                    label: {
                                        Label("Mailboxes", systemImage: "tray.2.fill")
+                                           .labelStyle(.tile(.blue))
                                    })
                 }
 
@@ -34,10 +35,11 @@ struct AdvancedView: View {
                                    },
                                    label: {
                                        Label("Custom domains", systemImage: "globe")
+                                           .labelStyle(.tile(.green))
                                    })
                 }
             }
-            .navigationTitle("Advanced")
+            .navigationTitle("Manage")
 
             DetailPlaceholderView(systemIconName: "circle.grid.cross",
                                   message: "Select a menu to see its details here")

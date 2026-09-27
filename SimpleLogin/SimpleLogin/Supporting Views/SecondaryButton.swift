@@ -16,7 +16,7 @@ struct SecondaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
-                .foregroundStyle(Color.brand)
+                .foregroundStyle(.tint)
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.glass)

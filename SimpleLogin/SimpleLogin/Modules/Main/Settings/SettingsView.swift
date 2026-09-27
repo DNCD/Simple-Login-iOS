@@ -52,17 +52,15 @@ private struct BiometricAuthenticationSection: View {
             Toggle(isOn: $localAuthenticator.biometricAuthEnabled) {
                 Label(localAuthenticator.biometryType.description,
                       systemImage: localAuthenticator.biometryType.systemImageName)
+                    .labelStyle(.tile(.green))
             }
             .toggleStyle(SwitchToggleStyle(tint: .brand))
 
             if localAuthenticator.biometricAuthEnabled {
                 VStack {
                     Toggle(isOn: $ultraProtectionEnabled) {
-                        Label {
-                            Text("Ultra-protection")
-                        } icon: {
-                            Image(systemName: "bolt.shield")
-                        }
+                        Label("Ultra-protection", systemImage: "bolt.shield.fill")
+                            .labelStyle(.tile(.orange))
                     }
                     .toggleStyle(SwitchToggleStyle(tint: .brand))
 
@@ -94,12 +92,14 @@ private struct LocalSettingsSection: View {
                         .tag(mode)
                 }
             } label: {
-                Label("Appearance", systemImage: "paintpalette")
+                Label("Appearance", systemImage: "paintpalette.fill")
+                    .labelStyle(.tile(.indigo))
             }
             .pickerStyle(.menu)
 
             Toggle(isOn: $hapticEffectEnabled) {
                 Label("Haptic feedback", systemImage: "iphone.radiowaves.left.and.right")
+                    .labelStyle(.tile(.pink))
             }
             .toggleStyle(SwitchToggleStyle(tint: .brand))
         }, header: {
@@ -124,6 +124,7 @@ private struct SiriAndSearchSection: View {
 
             Toggle(isOn: $spotlightIndexingEnabled) {
                 Label("Show aliases in Spotlight", systemImage: "magnifyingglass")
+                    .labelStyle(.tile(.gray))
             }
             .toggleStyle(SwitchToggleStyle(tint: .brand))
             .onChange(of: spotlightIndexingEnabled) { _, isEnabled in
@@ -277,24 +278,16 @@ private struct RateAndTipsSection: View {
             Button(action: {
                 requestReview()
             }, label: {
-                Label(title: {
-                    Text("Rate \(Brand.name)")
-                        .foregroundColor(Color(.label))
-                }, icon: {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                })
+                Label("Rate \(Brand.name)", systemImage: "star.fill")
+                    .labelStyle(.tile(.yellow))
+                    .foregroundStyle(Color(.label))
             })
 
             NavigationLink(destination: {
                 TipsView(isFirstTime: false)
             }, label: {
-                Label(title: {
-                    Text("Tips")
-                }, icon: {
-                    Image(systemName: "lightbulb.fill")
-                        .foregroundStyle(.orange)
-                })
+                Label("Tips", systemImage: "lightbulb.fill")
+                    .labelStyle(.tile(.orange))
             })
         }
     }
@@ -310,7 +303,8 @@ private struct AboutSection: View {
                                AboutView()
                            },
                            label: {
-                               Label("About RelayEmail", systemImage: "info.circle")
+                               Label("About \(Brand.name)", systemImage: "info")
+                                   .labelStyle(.tile(.blue))
                            })
         }
     }

@@ -46,7 +46,11 @@ struct SignUpView: View {
             Spacer()
 
             if !viewModel.isShowingKeyboard {
-                LogoView()
+                LogoWithNameView(size: 72)
+                Text("Create your account")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 8)
             }
 
             EmailPasswordView(email: $viewModel.email,
@@ -57,6 +61,8 @@ struct SignUpView: View {
 
             Group {
                 Text("By clicking \"Create account\", you agree to abide by RelayEmail's Terms & Conditions.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
                     .padding(.vertical)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
@@ -64,8 +70,8 @@ struct SignUpView: View {
                     showingTermsAndConditions = true
                 }, label: {
                     Text("View Terms & Conditions")
+                        .font(.footnote.weight(.semibold))
                 })
-                .foregroundColor(.blue)
             }
             .padding(.horizontal)
             .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ?
@@ -74,15 +80,17 @@ struct SignUpView: View {
             Spacer()
 
             if !viewModel.isShowingKeyboard {
-                Divider()
-
                 Button(action: dismiss.callAsFunction) {
-                    Text("Already have an account")
-                        .font(.callout)
+                    Text("I already have an account")
+                        .font(.subheadline.weight(.semibold))
                 }
+                .buttonStyle(.glass)
                 .padding(.vertical)
             }
         }
+        .background(BrandMeshBackground().overlay(Color.black.opacity(0.15).ignoresSafeArea()))
+        .environment(\.colorScheme, .dark)
+        .tint(.white)
         .contentShape(Rectangle())
         .safariView(isPresented: $showingTermsAndConditions) {
             // swiftlint:disable:next force_unwrapping
