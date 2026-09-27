@@ -15,7 +15,7 @@ jobs:
       - name: Run SwiftLint
         run: |
           mkdir artifacts
-          swiftlint --strict --config SimpleLogin/.swiftlint.yml --reporter junit > artifacts/swiftlint_results.xml
+          swiftlint --strict --config RelayEmail/.swiftlint.yml --reporter junit > artifacts/swiftlint_results.xml
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1

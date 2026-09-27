@@ -29,10 +29,11 @@ Protect your inbox with email aliases. RelayEmail is based on the open source
 - Default API URL: `https://app.relayemails.com/` (see `kDefaultApiUrlString` in `Utils/GlobalConstants.swift`)
 - Brand links & support email: `Brand` in `Utils/GlobalConstants.swift`
 - "Log in with Proton" is disabled by default: see `protonLoginEnabled` in `Utils/FeatureFlags.swift`
-- Bundle identifiers, the App Group (`group.io.simplelogin.ios`), the Keychain access group and the in-app purchase
-  product IDs still use the original SimpleLogin values. Replace them with identifiers registered to your Apple
-  Developer team before shipping. The widget extension uses `io.simplelogin.ios-app.widgets` and needs the same
-  App Group.
+- Identifiers: bundle IDs `com.relayemails.ios-app` (+ `.share-extension`, `.keyboard-extension`, `.widgets`),
+  App Group `group.com.relayemails.ios`, Keychain group `com.relayemails.ios-app.shared`, in-app purchases
+  `com.relayemails.ios_app.subscription.premium.monthly|yearly`. Register them in your Apple Developer account and
+  set your own team ID (`DEVELOPMENT_TEAM` and the Keychain group prefixes) before shipping.
+- The API client is the open source `SimpleLoginPackage` Swift package, which RelayEmail's API is compatible with.
 
 ## License
 Copyright (c) 2019-2022 SimpleLogin

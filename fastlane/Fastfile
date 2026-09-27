@@ -6,8 +6,8 @@ end
 
 lane :build do
     build_app(
-        project: "SimpleLogin/SimpleLogin.xcodeproj",
-        scheme: "SimpleLogin",
+        project: "RelayEmail/RelayEmail.xcodeproj",
+        scheme: "RelayEmail",
         derived_data_path: DERIVED_DATA_PATH,
         clean: true,
         skip_archive: true,

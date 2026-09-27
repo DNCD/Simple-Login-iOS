@@ -1,0 +1,135 @@
+//
+//  SignUpView.swift
+//  RelayEmail
+//
+//  Created by Thanh-Nhon Nguyen on 28/08/2021.
+//
+
+import BetterSafariView
+import Combine
+import SimpleLoginPackage
+import SwiftUI
+
+struct SignUpView: View {
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel: SignUpViewModel
+    @State private var showingLoadingAlert = false
+    @State private var showingRegisteredEmailAlert = false
+    @State private var showingTermsAndConditions = false
+    @State private var otpMode: OtpMode?
+    let onSignUp: (String, String) -> Void
+
+    init(apiService: APIServiceProtocol,
+         onSignUp: @escaping (String, String) -> Void) {
+        _viewModel = StateObject(wrappedValue: .init(apiService: apiService))
+        self.onSignUp = onSignUp
+    }
+
+    var body: some View {
+        let showingOtpViewSheet = Binding<Bool>(get: {
+            otpMode != nil && UIDevice.current.userInterfaceIdiom != .phone
+        }, set: { isShowing in
+            if !isShowing {
+                otpMode = nil
+            }
+        })
+
+        let showingOtpViewFullScreen = Binding<Bool>(get: {
+            otpMode != nil && UIDevice.current.userInterfaceIdiom == .phone
+        }, set: { isShowing in
+            if !isShowing {
+                otpMode = nil
+            }
+        })
+
+        VStack(spacing: 0) {
+            Spacer()
+
+            if !viewModel.isShowingKeyboard {
+                LogoWithNameView(size: 72)
+                Text("Create your account")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 8)
+            }
+
+            EmailPasswordView(email: $viewModel.email,
+                              password: $viewModel.password,
+                              mode: .signUp,
+                              onAction: viewModel.register)
+                .padding()
+
+            Group {
+                Text("By clicking \"Create account\", you agree to abide by RelayEmail's Terms & Conditions.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding(.vertical)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(action: {
+                    showingTermsAndConditions = true
+                }, label: {
+                    Text("View Terms & Conditions")
+                        .font(.footnote.weight(.semibold))
+                })
+            }
+            .padding(.horizontal)
+            .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ?
+                UIScreen.main.minLength * 3 / 5 : .infinity)
+
+            Spacer()
+
+            if !viewModel.isShowingKeyboard {
+                Button(action: dismiss.callAsFunction) {
+                    Text("I already have an account")
+                        .font(.subheadline.weight(.semibold))
+                }
+                .buttonStyle(.glass)
+                .padding(.vertical)
+            }
+        }
+        .background(BrandMeshBackground().overlay(Color.black.opacity(0.15).ignoresSafeArea()))
+        .environment(\.colorScheme, .dark)
+        .tint(.white)
+        .contentShape(Rectangle())
+        .safariView(isPresented: $showingTermsAndConditions) {
+            // swiftlint:disable:next force_unwrapping
+            SafariView(url: URL(string: Brand.termsUrlString)!)
+        }
+        .accentColor(.brand)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
+        .onReceive(Just(viewModel.isLoading)) { isLoading in
+            showingLoadingAlert = isLoading
+        }
+        .onReceive(Just(viewModel.registeredEmail)) { registeredEmail in
+            if registeredEmail != nil {
+                showingRegisteredEmailAlert = true
+                viewModel.handledRegisteredEmail()
+            }
+        }
+        .fullScreenCover(isPresented: showingOtpViewFullScreen) { otpView }
+        .sheet(isPresented: showingOtpViewSheet) { otpView }
+        .alertToastLoading(isPresenting: $showingLoadingAlert)
+        .alertToastError($viewModel.error)
+        .alert(isPresented: $showingRegisteredEmailAlert) {
+            Alert(title: Text("You are all set"),
+                  message: Text("We've sent an email to \(viewModel.email). Please check your inbox."),
+                  dismissButton: .default(Text("OK")) {
+                      otpMode = .activate(email: viewModel.email)
+                  })
+        }
+    }
+
+    private var otpView: some View {
+        // swiftlint:disable trailing_closure
+        OtpView(mode: $otpMode,
+                apiService: viewModel.apiService,
+                onActivation: {
+                    onSignUp(viewModel.email, viewModel.password)
+                    dismiss.callAsFunction()
+                })
+        // swiftlint:enable trailing_closure
+    }
+}
