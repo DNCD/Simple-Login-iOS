@@ -129,7 +129,6 @@ struct UpgradeView: View {
             Label("Best value · save 2 months", systemImage: "sparkles")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(Color.brand)
-                .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
