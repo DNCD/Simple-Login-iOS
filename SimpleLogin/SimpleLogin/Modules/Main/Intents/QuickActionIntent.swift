@@ -37,8 +37,11 @@ struct OpenQuickActionIntent: AppIntent {
         self.action = action
     }
 
+    @MainActor
     func perform() async throws -> some IntentResult {
         UserDefaults.shared?.set(action.rawValue, forKey: kPendingQuickAction)
+        // When performed inside the already running app, handle it right away
+        NotificationCenter.default.post(name: .pendingQuickAction, object: nil)
         return .result()
     }
 }

@@ -23,6 +23,11 @@ let kPendingQuickAction = "PendingQuickAction"
 
 let kDefaultPageSize = 20
 
+extension Notification.Name {
+    /// Posted when a widget or control asks the running app to perform a quick action
+    static let pendingQuickAction = Notification.Name("PendingQuickAction")
+}
+
 /// Brand information shared by the app and its extensions
 enum Brand {
     static let name = "RelayEmail"

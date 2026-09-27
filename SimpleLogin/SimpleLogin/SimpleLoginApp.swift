@@ -5,6 +5,7 @@
 //  Created by Thanh-Nhon Nguyen on 28/06/2021.
 //
 
+import Combine
 import CoreData
 import CoreSpotlight
 import SimpleLoginPackage
@@ -86,6 +87,9 @@ struct SimpleLoginApp: App {
             .accentColor(.brand)
             .onAppear {
                 appearance.apply()
+                router.consumePendingQuickAction()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .pendingQuickAction)) { _ in
                 router.consumePendingQuickAction()
             }
             .onOpenURL { url in
