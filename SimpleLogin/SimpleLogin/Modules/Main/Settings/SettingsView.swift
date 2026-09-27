@@ -93,14 +93,14 @@ private struct LocalSettingsSection: View {
 
     var body: some View {
         Section(content: {
-            Picker(selection: $appearance, content: {
+            Picker(selection: $appearance) {
                 ForEach(AppearanceMode.allCases) { mode in
                     Label(mode.title, systemImage: mode.systemImageName)
                         .tag(mode)
                 }
-            }, label: {
+            } label: {
                 Label("Appearance", systemImage: "paintpalette")
-            })
+            }
             .pickerStyle(.menu)
 
             Toggle(isOn: $hapticEffectEnabled) {
