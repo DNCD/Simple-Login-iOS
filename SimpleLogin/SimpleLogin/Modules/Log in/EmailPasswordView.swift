@@ -1,6 +1,6 @@
 //
 //  EmailPasswordView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 03/08/2021.
 //
@@ -30,6 +30,10 @@ struct EmailPasswordView: View {
     @Binding var password: String
     let mode: Mode
     let onAction: () async -> Void
+
+    private var passwordContentType: UITextContentType {
+        mode == .signUp ? .newPassword : .password
+    }
 
     var body: some View {
         VStack {
@@ -88,13 +92,13 @@ struct EmailPasswordView: View {
                                         invalidPassword = false
                                     }
                                 }
-                                .textContentType(.password)
+                                .textContentType(passwordContentType)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
                                 .padding(.trailing, 30)
                             } else {
                                 SecureField("Password", text: $password)
-                                    .textContentType(.password)
+                                    .textContentType(passwordContentType)
                                     .autocapitalization(.none)
                                     .disableAutocorrection(true)
                                     .padding(.trailing, 30)
@@ -128,8 +132,10 @@ struct EmailPasswordView: View {
                 }
             }
             .padding(16)
-            .overlay(RoundedRectangle(cornerRadius: 8.0)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1))
+            .background(Color(.secondarySystemGroupedBackground),
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(Color.primary.opacity(0.06), lineWidth: 1))
 
             PrimaryButton(title: mode.title) {
                 switch mode {
@@ -145,11 +151,11 @@ struct EmailPasswordView: View {
                     }
                 }
             }
-            .padding(.vertical, 4)
+            .padding(.top, 8)
             .opacity((email.isEmpty || password.isEmpty) ? 0.5 : 1)
             .disabled(email.isEmpty || password.isEmpty)
         }
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? UIScreen.main.minLength * 3 / 5 : .infinity)
+        .frame(maxWidth: 480)
     }
 }
 

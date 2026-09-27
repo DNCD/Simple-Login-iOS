@@ -13,7 +13,7 @@ extension SafariView {
         let safariView =
             SafariView(url: url,
                        configuration: .init(entersReaderIfAvailable: true, barCollapsingEnabled: true))
-            .accentColor(.slPurple)
+            .accentColor(.brand)
             .dismissButtonStyle(.done)
         self = safariView
     }

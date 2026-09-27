@@ -52,7 +52,7 @@ struct CreateAliasView: View {
             .navigationBarTitle("Create an alias", displayMode: .inline)
             .navigationBarItems(leading: cancelButton)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .emptyPlaceholder(isEmpty: viewModel.options?.canCreate == false) {
             UpgradeNeededView(onOk: onCancel) {
                 onOpenMyAccount?()
@@ -207,7 +207,7 @@ private struct ContentView: View {
                     viewModel.random(mode: .uuid)
                 }
             }
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
             .font(.body)
         }
     }
@@ -225,10 +225,10 @@ private struct ContentView: View {
         }, footer: {
             VStack {
                 Button("What are mailboxes?") {
-                    selectedUrlString = "https://simplelogin.io/docs/mailbox/add-mailbox/"
+                    selectedUrlString = Brand.addMailboxDocsUrlString
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.slPurple)
+                .foregroundColor(.brand)
                 buttons
             }
         })

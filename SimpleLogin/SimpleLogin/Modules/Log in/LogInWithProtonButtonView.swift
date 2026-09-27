@@ -46,7 +46,7 @@ struct LogInWithProtonButtonView: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .webAuthenticationSession(isPresented: isShowingSafariView) {
             // swiftlint:disable:next force_unwrapping
-            let url = URL(string: selectedUrlString ?? "") ?? URL(string: "https://simplelogin.io")!
+            let url = URL(string: selectedUrlString ?? "") ?? URL(string: Brand.websiteUrlString)!
             return .init(url: url,
                          callbackURLScheme: "auth.simplelogin",
                          onCompletion: handleResult).prefersEphemeralWebBrowserSession(true)

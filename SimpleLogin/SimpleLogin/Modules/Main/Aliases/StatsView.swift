@@ -1,6 +1,6 @@
 //
 // StatsView.swift
-// SimpleLogin - Created on 07/02/2024.
+// RelayEmail - Created on 07/02/2024.
 // Copyright (c) 2024 Proton Technologies AG
 //
 // This file is part of SimpleLogin.
@@ -25,38 +25,63 @@ import SwiftUI
 struct StatsView: View {
     let stats: Stats
 
-    var body: some View {
-        VStack {
-            HStack {
-                cell(title: "Aliases", description: "All time", count: stats.aliasCount)
-                cell(title: "Forwarded", description: "Last 14 days", count: stats.forwardCount)
-            }
+    private let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
 
-            HStack {
-                cell(title: "Replies/send", description: "Last 14 days", count: stats.replyCount)
-                cell(title: "Blocked", description: "Last 14 days", count: stats.blockCount)
-            }
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 12) {
+            cell(title: "Aliases",
+                 description: "All time",
+                 systemImageName: "at",
+                 color: .brand,
+                 count: stats.aliasCount)
+            cell(title: "Forwarded",
+                 description: "Last 14 days",
+                 systemImageName: "arrowshape.turn.up.right.fill",
+                 color: .green,
+                 count: stats.forwardCount)
+            cell(title: "Replies",
+                 description: "Last 14 days",
+                 systemImageName: "arrowshape.turn.up.left.fill",
+                 color: .blue,
+                 count: stats.replyCount)
+            cell(title: "Blocked",
+                 description: "Last 14 days",
+                 systemImageName: "hand.raised.fill",
+                 color: .red,
+                 count: stats.blockCount)
         }
     }
 }
 
 private extension StatsView {
-    func cell(title: String, description: String, count: Int) -> some View {
-        VStack(alignment: .leading) {
+    func cell(title: String,
+              description: String,
+              systemImageName: String,
+              color: Color,
+              count: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(title)
-                    .font(.footnote.weight(.medium))
+                Image(systemName: systemImageName)
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(.white)
+                    .frame(width: 28, height: 28)
+                    .background(color.gradient, in: Circle())
                 Spacer()
-                Text(description)
-                    .font(.caption)
-                    .foregroundStyle(Color.secondary)
+                Text("\(count)")
+                    .font(.title2.weight(.bold))
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
             }
-            Text("\(count)")
-                .font(.title2.bold())
+            Text(title)
+                .font(.subheadline.weight(.semibold))
+            Text(description)
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
+        .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(10)
-        .background(Color.secondary.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .accessibilityElement(children: .combine)
     }
 }

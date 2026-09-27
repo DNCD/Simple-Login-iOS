@@ -62,6 +62,7 @@ extension LABiometryType: CustomStringConvertible {
         case .none: return "Biometric authentication not supported"
         case .touchID: return "Touch ID"
         case .faceID: return "Face ID"
+        case .opticID: return "Optic ID"
         @unknown default: return "Unknown biometric type"
         }
     }
@@ -70,7 +71,8 @@ extension LABiometryType: CustomStringConvertible {
         switch self {
         case .touchID: "touchid"
         case .faceID: "faceid"
-        default: ""
+        case .opticID: "opticid"
+        default: "lock.fill"
         }
     }
 }

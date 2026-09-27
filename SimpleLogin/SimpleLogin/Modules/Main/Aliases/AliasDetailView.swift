@@ -190,7 +190,7 @@ private struct ActionsSection: View {
                },
                image: Image(systemName: viewModel.alias.pinned ? "bookmark.slash" : "bookmark.fill"),
                text: Text(viewModel.alias.pinned ? "unpin" : "pin"))
-            .foregroundColor(alias.pinned ? .red : .slPurple)
+            .foregroundColor(alias.pinned ? .red : .brand)
     }
 
     private var activateDeactivateButton: some View {
@@ -200,7 +200,7 @@ private struct ActionsSection: View {
                },
                image: Image(systemName: alias.enabled ? "circle.dashed" : "checkmark.circle.fill"),
                text: Text(alias.enabled ? "deactivate" : "activate"))
-            .foregroundColor(alias.enabled ? .red : .slPurple)
+            .foregroundColor(alias.enabled ? .red : .brand)
     }
 
     private var copyButton: some View {
@@ -211,7 +211,7 @@ private struct ActionsSection: View {
                },
                image: Image(systemName: "doc.on.doc.fill"),
                text: Text("copy"))
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
     }
 
     private var sendEmailButton: some View {
@@ -225,7 +225,7 @@ private struct ActionsSection: View {
                                   },
                                   image: Image(systemName: "paperplane.fill"),
                                   text: Text("contacts"))
-                               .foregroundColor(.slPurple)
+                               .foregroundColor(.brand)
                        })
     }
 }
@@ -247,9 +247,9 @@ private struct MailboxesSection: View {
             Text("Mailboxes")
         }, footer: {
             Button("What are mailboxes?") {
-                selectedUrlString = "https://simplelogin.io/docs/mailbox/add-mailbox/"
+                selectedUrlString = Brand.addMailboxDocsUrlString
             }
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
         })
         .betterSafariView(urlString: $selectedUrlString)
     }
@@ -559,7 +559,7 @@ private struct EditNotesView: View {
                 }
             }
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .onAppear {
             notes = viewModel.alias.note ?? ""
         }
@@ -614,7 +614,7 @@ private struct EditDisplayNameView: View {
                 }
             }
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .onReceive(viewModel.$isUpdating.dropFirst()) { isUpdating in
             if !isUpdating {
                 dismiss()

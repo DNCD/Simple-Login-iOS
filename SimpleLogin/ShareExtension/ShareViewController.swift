@@ -121,7 +121,7 @@ final class ShareViewController: UIViewController {
             extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
         }
         alert.addAction(closeAction)
-        alert.view.tintColor = .slPurple
+        alert.view.tintColor = .brand
         present(alert, animated: true, completion: nil)
     }
 

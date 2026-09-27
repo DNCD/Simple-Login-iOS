@@ -61,7 +61,7 @@ struct AliasView: View {
         }, icon: {
             if alias.pinned {
                 Image(systemName: "bookmark.fill")
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
             }
         })
         .font(.callout)

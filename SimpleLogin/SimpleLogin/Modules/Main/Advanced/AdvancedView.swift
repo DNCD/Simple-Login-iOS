@@ -48,16 +48,16 @@ struct AdvancedView: View {
 
     private var mailboxesSectionFooter: some View {
         Button("What are mailboxes?") {
-            selectedUrlString = "https://simplelogin.io/docs/mailbox/add-mailbox/"
+            selectedUrlString = Brand.addMailboxDocsUrlString
         }
-        .foregroundColor(.slPurple)
+        .foregroundColor(.brand)
     }
 
     private var customDomainsSectionFooter: some View {
         Button("What are custom domains?") {
-            selectedUrlString = "https://simplelogin.io/docs/custom-domain/add-domain/"
+            selectedUrlString = Brand.addDomainDocsUrlString
         }
-        .foregroundColor(.slPurple)
+        .foregroundColor(.brand)
     }
 }
 

@@ -25,7 +25,7 @@ struct SearchAliasesView: UIViewControllerRepresentable {
                                                          onDeleteAlias: onDeleteAlias,
                                                          onUpgrade: onUpgrade)
         let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.view.tintColor = .slPurple
+        navigationController.view.tintColor = .brand
         return navigationController
     }
 

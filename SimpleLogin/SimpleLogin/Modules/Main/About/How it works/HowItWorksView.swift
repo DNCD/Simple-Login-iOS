@@ -25,6 +25,7 @@ struct HowItWorksView: View {
             .padding(.top, 20)
             .padding()
         }
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
         .navigationTitle("How it works")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -46,8 +47,7 @@ private struct StepView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(20)
-        .shadow(color: Color(.systemGray5), radius: 10, x: 0, y: 0)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 24, style: .continuous))
     }
 }

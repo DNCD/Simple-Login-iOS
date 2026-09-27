@@ -31,7 +31,7 @@ struct KeyboardContentView: View {
                     }, label: {
                         Label("Retry", systemImage: "gobackward")
                     })
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
                 }
                 .padding()
             } else {

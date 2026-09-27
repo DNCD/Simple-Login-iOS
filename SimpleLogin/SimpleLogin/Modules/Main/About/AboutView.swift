@@ -1,6 +1,6 @@
 //
 //  AboutView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 02/09/2021.
 //
@@ -17,6 +17,19 @@ struct AboutView: View {
 
     var body: some View {
         Form {
+            Section {
+                VStack(spacing: 12) {
+                    LogoWithNameView(size: 72)
+                    Text("Protect your inbox with email aliases")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical)
+                .listRowBackground(Color.clear)
+            }
+
             Section(header: Text("How it works")) {
                 Image("Schema")
                     .resizable()
@@ -30,111 +43,79 @@ struct AboutView: View {
             }
 
             Section {
-                systemImageLabel(title: "Terms and conditions",
-                                 systemImageName: "doc.plaintext.fill",
-                                 urlString: "https://simplelogin.io/terms/")
+                linkLabel(title: "Website",
+                          systemImageName: "globe",
+                          color: .blue,
+                          urlString: Brand.websiteUrlString)
 
-                systemImageLabel(title: "Privacy policy",
-                                 systemImageName: "hand.raised.fill",
-                                 urlString: "https://simplelogin.io/privacy/")
+                linkLabel(title: "Dashboard",
+                          systemImageName: "rectangle.grid.2x2.fill",
+                          color: .brand,
+                          urlString: Brand.dashboardUrlString)
 
-                systemImageLabel(title: "Security",
-                                 systemImageName: "lock.shield",
-                                 urlString: "https://simplelogin.io/security/")
+                linkLabel(title: "Help & documentation",
+                          systemImageName: "book.fill",
+                          color: .orange,
+                          urlString: Brand.docsUrlString)
+
+                linkLabel(title: "Frequently asked questions",
+                          systemImageName: "questionmark.bubble.fill",
+                          color: .green,
+                          urlString: Brand.faqUrlString)
             }
 
             Section {
-                systemImageLabel(title: "Website",
-                                 systemImageName: "globe",
-                                 urlString: "https://simplelogin.io/")
+                linkLabel(title: "Terms and conditions",
+                          systemImageName: "doc.plaintext.fill",
+                          color: .gray,
+                          urlString: Brand.termsUrlString)
 
-                customImageLabel(title: "Github forum",
-                                 imageName: "Github",
-                                 urlString: "https://github.com/simple-login/app/discussions")
-            }
+                linkLabel(title: "Privacy policy",
+                          systemImageName: "hand.raised.fill",
+                          color: .indigo,
+                          urlString: Brand.privacyUrlString)
 
-            Section {
-                systemImageLabel(title: "Frequently asked questions",
-                                 systemImageName: "person.fill.questionmark",
-                                 urlString: "https://simplelogin.io/faq/")
-
-                systemImageLabel(title: "Blog",
-                                 systemImageName: "newspaper.fill",
-                                 urlString: "https://simplelogin.io/blog/")
-
-                systemImageLabel(title: "Our team",
-                                 systemImageName: "person.3.fill",
-                                 urlString: "https://simplelogin.io/about/")
-            }
-
-            Section {
-                customImageLabel(title: "Github",
-                                 imageName: "Github",
-                                 urlString: "https://github.com/simple-login/")
-
-                customImageLabel(title: "Twitter",
-                                 imageName: "Twitter",
-                                 urlString: "https://twitter.com/simplelogin")
-
-                customImageLabel(title: "Reddit",
-                                 imageName: "Reddit",
-                                 urlString: "https://www.reddit.com/r/Simplelogin/")
-
-                customImageLabel(title: "Product Hunt",
-                                 imageName: "ProductHunt",
-                                 urlString: "https://www.producthunt.com/posts/simplelogin")
+                linkLabel(title: "Security",
+                          systemImageName: "lock.shield.fill",
+                          color: .teal,
+                          urlString: Brand.securityUrlString)
             }
 
             Section(content: {
-                URLButton(urlString: "mailto:support@simplelogin.zendesk.com") {
+                URLButton(urlString: "mailto:\(Brand.supportEmail)") {
                     Label("Email us", systemImage: "envelope.fill")
                 }
             }, header: {
                 Text("Have a question?")
             }, footer: {
-                VStack {
-                    Text("Version \(kVersionName) (Build \(kBuildNumber))")
-                        .fontWeight(.medium)
-                    Spacer()
-                    // swiftlint:disable:next line_length
-                    Text("SimpleLogin is the product of SimpleLogin SAS, registered in France under the SIREN number 884302134.")
-                        .multilineTextAlignment(.center)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
+                Text("Version \(kVersionName) (Build \(kBuildNumber))")
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top)
             })
         }
-        .navigationTitle("About SimpleLogin")
+        .navigationTitle("About \(Brand.name)")
         .betterSafariView(urlString: $selectedUrlString)
     }
 
-    private func systemImageLabel(title: String,
-                                  systemImageName: String,
-                                  urlString: String) -> some View {
-        Label(title, systemImage: systemImageName)
-            .accentColor(Color(.label))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                selectedUrlString = urlString
-            }
-    }
-
-    private func customImageLabel(title: String,
-                                  imageName: String,
-                                  urlString: String) -> some View {
-        Label(title: {
-            Text(title)
-        }, icon: {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20, height: 20)
-        })
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
+    private func linkLabel(title: String,
+                           systemImageName: String,
+                           color: Color,
+                           urlString: String) -> some View {
+        Button(action: {
             selectedUrlString = urlString
-        }
+        }, label: {
+            Label(title: {
+                Text(title)
+                    .foregroundStyle(Color(.label))
+            }, icon: {
+                Image(systemName: systemImageName)
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 28, height: 28)
+                    .background(color.gradient, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            })
+        })
     }
 }
 

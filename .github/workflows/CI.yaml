@@ -1,4 +1,4 @@
-name: SimpleLogin iOS CI
+name: RelayEmail iOS CI
 
 on:
   push:

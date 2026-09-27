@@ -1,6 +1,6 @@
 //
 //  LogInView.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 29/07/2021.
 //
@@ -59,72 +59,83 @@ struct LogInView: View {
             }
         })
 
-        VStack {
-            if !launching {
-                topView
-            }
+        ZStack(alignment: .top) {
+            backgroundView
 
-            Spacer()
-
-            if !viewModel.isShowingKeyboard || UIDevice.current.userInterfaceIdiom != .phone {
-                LogoView()
-            }
-
-            if !launching {
+            if launching {
                 VStack {
-                    EmailPasswordView(email: $viewModel.email,
-                                      password: $viewModel.password,
-                                      mode: .logIn,
-                                      onAction: viewModel.logIn)
-
-                    Text("or")
-                        .font(.caption)
-
-                    LogInWithProtonButtonView(onSuccess: { apiKey in
-                        onComplete(apiKey, viewModel.apiService)
-                    }, onError: { error in
-                        viewModel.error = error
-                    })
-                    .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ?
-                        UIScreen.main.minLength * 3 / 5 : .infinity)
+                    Spacer()
+                    LogoWithNameView()
+                    ProgressView()
+                        .padding(.top)
+                    Spacer()
                 }
-                .padding()
-                .sheet(isPresented: showingOtpViewSheet) { otpView() }
-                .fullScreenCover(isPresented: showingOtpViewFullScreen) { otpView() }
-
-                if !viewModel.isShowingKeyboard {
-                    Button(action: {
-                        showingResetPasswordAlert = true
-                    }, label: {
-                        Text("Forgot password?")
-                    })
-                }
+                .frame(maxWidth: .infinity)
             } else {
-                ProgressView()
-            }
+                ScrollView {
+                    VStack(spacing: 24) {
+                        LogoWithNameView(size: viewModel.isShowingKeyboard ? 64 : 88)
+                            .padding(.top, 24)
 
-            Spacer()
+                        if !viewModel.isShowingKeyboard {
+                            Text("Protect your inbox with email aliases")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
 
-            if !launching {
-                bottomView
-                    .fixedSize(horizontal: false, vertical: true)
-                    .opacity(viewModel.isShowingKeyboard ? 0 : 1)
-                    .fullScreenCover(isPresented: $showingSignUpView) {
-                        SignUpView(apiService: viewModel.apiService) { email, password in
-                            Task {
-                                viewModel.email = email
-                                viewModel.password = password
-                                await viewModel.logIn()
+                        VStack(spacing: 16) {
+                            EmailPasswordView(email: $viewModel.email,
+                                              password: $viewModel.password,
+                                              mode: .logIn,
+                                              onAction: viewModel.logIn)
+
+                            Button(action: {
+                                showingResetPasswordAlert = true
+                            }, label: {
+                                Text("Forgot password?")
+                                    .font(.subheadline.weight(.medium))
+                            })
+
+                            dividerView
+
+                            SecondaryButton(title: "Log in with API key") {
+                                showingApiKeyView = true
+                            }
+
+                            if featureFlags.protonLoginEnabled {
+                                LogInWithProtonButtonView(onSuccess: { apiKey in
+                                    onComplete(apiKey, viewModel.apiService)
+                                }, onError: { error in
+                                    viewModel.error = error
+                                })
                             }
                         }
+                        .frame(maxWidth: 480)
+                        .sheet(isPresented: showingOtpViewSheet) { otpView() }
+                        .fullScreenCover(isPresented: showingOtpViewFullScreen) { otpView() }
+
+                        bottomView
+                            .fullScreenCover(isPresented: $showingSignUpView) {
+                                SignUpView(apiService: viewModel.apiService) { email, password in
+                                    Task {
+                                        viewModel.email = email
+                                        viewModel.password = password
+                                        await viewModel.logIn()
+                                    }
+                                }
+                            }
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 24)
+                    .frame(maxWidth: .infinity)
+                }
+                .scrollDismissesKeyboard(.interactively)
+                .safeAreaInset(edge: .top) { topView }
             }
         }
-        .contentShape(Rectangle())
         .animation(.default, value: viewModel.isShowingKeyboard)
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
+        .animation(.default, value: launching)
         .onReceive(Just(preferences.apiUrl)) { apiUrl in
             viewModel.updateApiUrl(apiUrl)
         }
@@ -148,15 +159,9 @@ struct LogInView: View {
         }
         .onAppear {
             if let apiKey = KeychainService.shared.getApiKey() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    onComplete(apiKey, viewModel.apiService)
-                }
+                onComplete(apiKey, viewModel.apiService)
             } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    withAnimation {
-                        launching = false
-                    }
-                }
+                launching = false
             }
         }
         .alert(isPresented: showingResetEmailSentAlert) {
@@ -168,6 +173,19 @@ struct LogInView: View {
         .textFieldAlert(isPresented: $showingResetPasswordAlert, config: resetPasswordConfig)
         .alertToastLoading(isPresenting: $showingLoadingAlert)
         .alertToastError($viewModel.error)
+    }
+
+    private var backgroundView: some View {
+        ZStack {
+            Color(.systemGroupedBackground)
+            LinearGradient.brand
+                .opacity(0.25)
+                .frame(height: 360)
+                .blur(radius: 80)
+                .offset(y: -160)
+                .frame(maxHeight: .infinity, alignment: .top)
+        }
+        .ignoresSafeArea()
     }
 
     private var topView: some View {
@@ -215,60 +233,48 @@ struct LogInView: View {
                     Button(action: {
                         showingAboutView = true
                     }, label: {
-                        Label("About SimpleLogin", systemImage: "info.circle")
+                        Label("About \(Brand.name)", systemImage: "info.circle")
                     })
                 }
             }, label: {
-                if #available(iOS 15, *) {
-                    Image(systemName: "list.bullet.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                } else {
-                    Image(systemName: "list.bullet")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                }
+                Image(systemName: "ellipsis.circle")
+                    .font(.title2)
+                    .accessibilityLabel(Text("More options"))
             })
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.top, 8)
+    }
+
+    private var dividerView: some View {
+        HStack(spacing: 12) {
+            horizontalLine
+            Text("OR")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.secondary)
+            horizontalLine
+        }
+        .padding(.vertical, 4)
     }
 
     private var bottomView: some View {
-        VStack {
-            GeometryReader { geometry in
-                HStack {
-                    Spacer()
-
-                    let lineWidth = geometry.size.width / 5
-                    horizontalLine
-                        .frame(width: lineWidth)
-
-                    Text("OR")
-                        .font(.caption2)
-                        .fontWeight(.medium)
-
-                    horizontalLine
-                        .frame(width: lineWidth)
-
-                    Spacer()
-                }
-            }
-
+        HStack(spacing: 4) {
+            Text("New to \(Brand.name)?")
+                .foregroundStyle(.secondary)
             Button(action: {
                 showingSignUpView.toggle()
             }, label: {
-                Text("Create new account")
-                    .font(.callout)
+                Text("Create an account")
+                    .fontWeight(.semibold)
             })
         }
-        .padding(.bottom)
+        .font(.subheadline)
+        .padding(.top, 8)
     }
 
     private var horizontalLine: some View {
         Color.secondary
-            .opacity(0.5)
+            .opacity(0.3)
             .frame(height: 1)
     }
 

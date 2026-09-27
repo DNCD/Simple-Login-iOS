@@ -1,6 +1,6 @@
 //
 //  AliasesViewModel.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 02/09/2021.
 //
@@ -107,6 +107,7 @@ final class AliasesViewModel: BaseReachabilitySessionViewModel, ObservableObject
                 self.aliases.append(contentsOf: newAliases)
                 self.currentPage += 1
                 self.canLoadMorePages = newAliases.count == kDefaultPageSize
+                SpotlightIndexer.index(newAliases)
                 try self.dataController.update(newAliases)
             } catch {
                 self.error = error
@@ -118,6 +119,7 @@ final class AliasesViewModel: BaseReachabilitySessionViewModel, ObservableObject
     func refresh() async {
         do {
             aliases = try await getAliases(page: 0)
+            SpotlightIndexer.index(aliases)
             stats = try await getStats()
             currentPage = 1
             canLoadMorePages = aliases.count == kDefaultPageSize
@@ -238,6 +240,7 @@ final class AliasesViewModel: BaseReachabilitySessionViewModel, ObservableObject
                 let deleteAliasEndpoint = DeleteAliasEndpoint(apiKey: session.apiKey.value,
                                                               aliasID: alias.id)
                 _ = try await session.execute(deleteAliasEndpoint)
+                SpotlightIndexer.remove(alias)
                 self.remove(alias: alias)
             } catch {
                 self.error = error

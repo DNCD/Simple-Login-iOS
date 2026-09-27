@@ -72,10 +72,10 @@ struct UpgradeView: View {
 
     private var gradientBackground: some View {
         LinearGradient(gradient: .init(colors: [
-            .slPurple.opacity(0.05),
-            .slPurple.opacity(0.1),
-            .slPurple.opacity(0.15),
-            .slPurple.opacity(0.2)
+            .brand.opacity(0.05),
+            .brand.opacity(0.1),
+            .brand.opacity(0.15),
+            .brand.opacity(0.2)
         ]),
         startPoint: .top,
         endPoint: .bottom)
@@ -105,12 +105,12 @@ struct UpgradeView: View {
             .fontWeight(.heavy)
             .padding([.horizontal, .top])
             .padding(.bottom, 4)
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         VStack(alignment: .leading, spacing: 6) {
             ForEach(kPremiumCapacities) {
-                CapacityView(capacity: $0, checkmarkColor: .slPurple)
+                CapacityView(capacity: $0, checkmarkColor: .brand)
             }
             Text("...and all of our upcoming features.")
         }
@@ -155,22 +155,22 @@ struct UpgradeView: View {
     private var termsAndPrivacyView: some View {
         HStack {
             Button(action: {
-                selectedUrlString = "https://simplelogin.io/terms/"
+                selectedUrlString = Brand.termsUrlString
             }, label: {
                 Text("Terms and condition")
                     .fontWeight(.semibold)
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
             })
 
             Text("•")
                 .foregroundColor(.secondary)
 
             Button(action: {
-                selectedUrlString = "https://simplelogin.io/privacy/"
+                selectedUrlString = Brand.privacyUrlString
             }, label: {
                 Text("Privacy policy")
                     .fontWeight(.semibold)
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
             })
         }
         .font(.callout)
@@ -191,7 +191,7 @@ private let kFreeCapacities: [Capacity] = [
     .oneMailbox,
     .browserExtensions,
     .totp,
-    .signWithSimpleLogin
+    .signInWithRelayEmail
 ]
 
 private let kPremiumCapacities: [Capacity] = [

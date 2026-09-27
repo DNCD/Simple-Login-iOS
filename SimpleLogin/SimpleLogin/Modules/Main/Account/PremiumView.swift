@@ -16,12 +16,12 @@ struct PremiumView: View {
                     .fontWeight(.heavy)
                     .padding([.horizontal, .top])
                     .padding(.bottom, 4)
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 VStack(alignment: .leading, spacing: 6) {
                     ForEach(kCapacities) {
-                        CapacityView(capacity: $0, checkmarkColor: .slPurple)
+                        CapacityView(capacity: $0, checkmarkColor: .brand)
                     }
                     Text("...and all of our upcoming features.")
                 }
@@ -34,10 +34,10 @@ struct PremiumView: View {
 
     private var gradientBackground: some View {
         LinearGradient(gradient: .init(colors: [
-            .slPurple.opacity(0.05),
-            .slPurple.opacity(0.1),
-            .slPurple.opacity(0.15),
-            .slPurple.opacity(0.2)
+            .brand.opacity(0.05),
+            .brand.opacity(0.1),
+            .brand.opacity(0.15),
+            .brand.opacity(0.2)
         ]),
         startPoint: .top,
         endPoint: .bottom)
@@ -50,7 +50,7 @@ private let kCapacities: [Capacity] = [
     .unlimitedReplySend,
     .browserExtensions,
     .totp,
-    .signWithSimpleLogin,
+    .signInWithRelayEmail,
     .unlimitedAliases,
     .unlimitedMailboxes,
     .unlimitedDomains,

@@ -17,7 +17,7 @@ struct LabelText: View {
             .foregroundColor(.white)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
-            .background(Color.slPurple)
+            .background(Color.brand)
             .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

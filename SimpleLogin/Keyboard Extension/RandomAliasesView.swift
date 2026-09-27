@@ -21,7 +21,7 @@ struct RandomAliasesView: View {
                     viewModel.random(mode: .uuid)
                 }
             }
-            .foregroundColor(.slPurple)
+            .foregroundColor(.brand)
             .font(.body)
         }
     }

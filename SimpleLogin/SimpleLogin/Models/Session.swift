@@ -30,7 +30,7 @@ extension Session {
 
 extension APIService {
     static var preview: APIService {
-        .init(baseURL: URL(string: "https://simplelogin.io")!, // swiftlint:disable:this force_unwrapping
+        .init(baseURL: URL(string: Brand.websiteUrlString)!, // swiftlint:disable:this force_unwrapping
               session: .shared,
               printDebugInformation: false)
     }

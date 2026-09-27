@@ -1,13 +1,15 @@
 //
 //  SimpleLoginApp.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Thanh-Nhon Nguyen on 28/06/2021.
 //
 
 import CoreData
+import CoreSpotlight
 import SimpleLoginPackage
 import SwiftUI
+import TipKit
 
 @main
 struct SimpleLoginApp: App {
@@ -15,12 +17,13 @@ struct SimpleLoginApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @AppStorage(kBiometricAuthEnabled) var biometricAuthEnabled = false
     @AppStorage(kUltraProtectionEnabled) var ultraProtectionEnabled = false
-    @AppStorage(kForceDarkMode) private var forceDarkMode = false
+    @AppStorage(kAppearance) private var appearance: AppearanceMode = .system
     @AppStorage(kAliasDisplayMode) private var displayMode: AliasDisplayMode = .default
     @AppStorage(kDidShowTips) private var didShowTips = false
     @State private var preferences = Preferences.shared
     @State private var apiKey: ApiKey?
     @State private var apiService: APIServiceProtocol?
+    @StateObject private var router = AppRouter.shared
     private let reachabilityObserver = ReachabilityObserver()
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "SimpleLogin")
@@ -32,51 +35,68 @@ struct SimpleLoginApp: App {
         return container
     }()
 
+    init() {
+        AppearanceMode.migrateLegacySettingIfNeeded()
+        try? Tips.configure([.displayFrequency(.immediate)])
+    }
+
     var body: some Scene {
         WindowGroup {
-            if let apiKey, let apiService {
-                MainView {
-                    try? KeychainService.shared.setApiKey(nil)
-                    try? DataController(context: persistentContainer.viewContext).reset()
-                    self.apiKey = nil
-                    self.apiService = nil
-                    biometricAuthEnabled = false
-                    ultraProtectionEnabled = false
-                    forceDarkMode = false
-                    displayMode = .default
-                    didShowTips = false
-                    if let cookies = HTTPCookieStorage.shared.cookies {
-                        for cookie in cookies {
-                            HTTPCookieStorage.shared.deleteCookie(cookie)
+            Group {
+                if let apiKey, let apiService {
+                    MainView {
+                        try? KeychainService.shared.setApiKey(nil)
+                        try? DataController(context: persistentContainer.viewContext).reset()
+                        SpotlightIndexer.removeAll()
+                        self.apiKey = nil
+                        self.apiService = nil
+                        biometricAuthEnabled = false
+                        ultraProtectionEnabled = false
+                        appearance = .system
+                        displayMode = .default
+                        didShowTips = false
+                        if let cookies = HTTPCookieStorage.shared.cookies {
+                            for cookie in cookies {
+                                HTTPCookieStorage.shared.deleteCookie(cookie)
+                            }
                         }
                     }
-                }
-                .accentColor(.slPurple)
-                .environment(\.managedObjectContext, persistentContainer.viewContext)
-                .environmentObject(preferences)
-                .environmentObject(Session(apiKey: apiKey, apiService: apiService))
-                .environmentObject(reachabilityObserver)
-                .sensitiveContent {
-                    ZStack {
-                        Color(.systemBackground)
-                        Image("LogoWithName")
+                    .environment(\.managedObjectContext, persistentContainer.viewContext)
+                    .environmentObject(preferences)
+                    .environmentObject(Session(apiKey: apiKey, apiService: apiService))
+                    .environmentObject(reachabilityObserver)
+                    .environmentObject(router)
+                    .sensitiveContent {
+                        ZStack {
+                            Color(.systemBackground)
+                            LogoView(size: 96)
+                        }
+                        .ignoresSafeArea()
                     }
-                    .ignoresSafeArea()
+                } else {
+                    LogInView(apiUrl: preferences.apiUrl) { apiKey, apiService in
+                        try? KeychainService.shared.setApiKey(apiKey)
+                        self.apiKey = apiKey
+                        self.apiService = apiService
+                    }
+                    .environmentObject(preferences)
                 }
-            } else {
-                LogInView(apiUrl: preferences.apiUrl) { apiKey, apiService in
-                    try? KeychainService.shared.setApiKey(apiKey)
-                    self.apiKey = apiKey
-                    self.apiService = apiService
-                }
-                .accentColor(.slPurple)
-                .environmentObject(preferences)
+            }
+            .tint(.brand)
+            .accentColor(.brand)
+            .onAppear { appearance.apply() }
+            .onOpenURL { url in
+                router.handle(url: url)
+            }
+            .onContinueUserActivity(CSSearchableItemActionType) { userActivity in
+                router.handle(spotlightActivity: userActivity)
             }
         }
-        .onChange(of: scenePhase) { _ in
-            if forceDarkMode {
-                UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
-            }
+        .onChange(of: scenePhase) {
+            appearance.apply()
+        }
+        .onChange(of: appearance) { _, newValue in
+            newValue.apply()
         }
     }
 }

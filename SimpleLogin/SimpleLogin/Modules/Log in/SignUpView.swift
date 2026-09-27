@@ -56,7 +56,7 @@ struct SignUpView: View {
                 .padding()
 
             Group {
-                Text("By clicking \"Create account\", you agree to abide by SimpleLogin's Terms & Conditions.")
+                Text("By clicking \"Create account\", you agree to abide by RelayEmail's Terms & Conditions.")
                     .padding(.vertical)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
@@ -86,9 +86,9 @@ struct SignUpView: View {
         .contentShape(Rectangle())
         .safariView(isPresented: $showingTermsAndConditions) {
             // swiftlint:disable:next force_unwrapping
-            SafariView(url: URL(string: "https://simplelogin.io/terms/")!)
+            SafariView(url: URL(string: Brand.termsUrlString)!)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .onTapGesture {
             UIApplication.shared.endEditing()
         }

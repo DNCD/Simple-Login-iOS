@@ -1,6 +1,6 @@
 //
 //  SecondaryButton.swift
-//  SimpleLogin
+//  RelayEmail
 //
 //  Created by Nhon Nguyen on 25/02/2022.
 //
@@ -15,12 +15,12 @@ struct SecondaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.slPurple)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical)
-                .overlay(RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.slPurple, lineWidth: 2))
+                .foregroundStyle(Color.brand)
+                .frame(maxWidth: .infinity, minHeight: 52)
+                .background(Color.brand.opacity(0.12),
+                            in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
+        .buttonStyle(PressableButtonStyle())
     }
 }

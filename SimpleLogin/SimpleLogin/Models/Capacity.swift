@@ -38,8 +38,8 @@ extension Capacity {
         .init(description: "Secure your account with TOTP and/or WebAuthn (FIDO)")
     }
 
-    static var signWithSimpleLogin: Capacity {
-        .init(description: "Sign in with SimpleLogin")
+    static var signInWithRelayEmail: Capacity {
+        .init(description: "Sign in with RelayEmail")
     }
 
     static var everythingInFreePlan: Capacity {

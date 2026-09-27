@@ -17,49 +17,53 @@ struct TipsView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
-                VStack {
+                VStack(spacing: 12) {
                     if isFirstTime {
-                        Text("👋 Welcome to")
-                            .font(.title)
-                            .fontWeight(.bold)
-                        Text("SimpleLogin")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.slPurple)
-                            .padding(.bottom)
+                        LogoView(size: 88)
+                            .padding(.bottom, 4)
+                        Text("Welcome to")
+                            .font(.title2.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Text(Brand.name)
+                            .font(.largeTitle.weight(.heavy))
+                            .foregroundStyle(LinearGradient.brand)
                     }
 
-                    Text("Here are some useful tips to help you make the most out of this application.")
+                    Text("A few tips to help you get the most out of your aliases.")
                         .font(.callout)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
                 switch localAuthenticator.biometryType {
                 case .touchID:
-                    TipView(tip: .touchId)
+                    OnboardingTipCard(tip: .touchId)
                         .environmentObject(localAuthenticator)
                 case .faceID:
-                    TipView(tip: .faceId)
+                    OnboardingTipCard(tip: .faceId)
                         .environmentObject(localAuthenticator)
                 default:
                     EmptyView()
                 }
-                TipView(tip: .contextMenu)
-                TipView(tip: .fullScreen)
-                TipView(tip: .shareExtension)
-                TipView(tip: .keyboardExtension)
+                OnboardingTipCard(tip: .contextMenu)
+                OnboardingTipCard(tip: .fullScreen)
+                OnboardingTipCard(tip: .siriShortcuts)
+                OnboardingTipCard(tip: .shareExtension)
+                OnboardingTipCard(tip: .keyboardExtension)
 
                 if isFirstTime {
-                    PrimaryButton(title: "Got it 👍") {
+                    PrimaryButton(title: "Get started") {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
             .padding(.top, 20)
             .padding()
+            .frame(maxWidth: 640)
+            .frame(maxWidth: .infinity)
         }
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
         .navigationBarHidden(isFirstTime)
-        .navigationTitle("💡 Tips")
+        .navigationTitle("Tips")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: isFirstTime ? closeButton : nil)
         .alertToastMessage($localAuthenticator.message)
@@ -81,10 +85,10 @@ struct TipsView_Previews: PreviewProvider {
     }
 }
 
-private struct TipView: View {
+private struct OnboardingTipCard: View {
     @EnvironmentObject var localAuthenticator: LocalAuthenticator
     @State private var showingSheet = false
-    let tip: Tip
+    let tip: OnboardingTip
 
     var body: some View {
         VStack {
@@ -96,7 +100,7 @@ private struct TipView: View {
                             .font(.title3)
                             .fontWeight(.bold)
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+                    .toggleStyle(SwitchToggleStyle(tint: .brand))
 
                 case .faceId:
                     Toggle(isOn: $localAuthenticator.biometricAuthEnabled) {
@@ -104,7 +108,7 @@ private struct TipView: View {
                             .font(.title3)
                             .fontWeight(.bold)
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+                    .toggleStyle(SwitchToggleStyle(tint: .brand))
 
                 default:
                     Text(tip.title)
@@ -123,7 +127,7 @@ private struct TipView: View {
                 Image(systemName: tip.systemIconName)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
                     .frame(width: 40)
             }
 
@@ -147,9 +151,8 @@ private struct TipView: View {
             }
         }
         .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(20)
-        .shadow(color: Color(.systemGray5), radius: 10, x: 0, y: 0)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         .sheet(isPresented: $showingSheet) {
             switch tip {
             case .fullScreen:
@@ -168,7 +171,7 @@ private struct TipView: View {
 
     private func handleAction() {
         switch tip {
-        case .contextMenu, .faceId, .touchId:
+        case .contextMenu, .faceId, .touchId, .siriShortcuts:
             break
         case .fullScreen, .shareExtension:
             showingSheet = true

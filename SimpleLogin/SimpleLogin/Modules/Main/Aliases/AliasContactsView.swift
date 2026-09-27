@@ -36,7 +36,7 @@ struct AliasContactsView: View {
                     Button("Create") {
                         viewModel.createContact(contactEmail: newContactEmail)
                     }
-                    .foregroundColor(.slPurple)
+                    .foregroundColor(.brand)
                     .disabled(newContactEmail.isEmpty)
                 }
                 .buttonStyle(.plain)
@@ -121,9 +121,9 @@ struct AliasContactsView: View {
 
     private var createContactSectionFooter: some View {
         Button("How to send emails from your alias?") {
-            selectedUrlString = "https://simplelogin.io/docs/getting-started/send-email/"
+            selectedUrlString = Brand.sendEmailDocsUrlString
         }
-        .foregroundColor(.slPurple)
+        .foregroundColor(.brand)
     }
 }
 

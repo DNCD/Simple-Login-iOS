@@ -62,7 +62,7 @@ private struct CatchAllSection: View {
         let domain = viewModel.domain
         Section(content: {
             Toggle("Catch all", isOn: $viewModel.catchAll.animation())
-                .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+                .toggleStyle(SwitchToggleStyle(tint: .brand))
             if viewModel.catchAll {
                 VStack(alignment: .leading) {
                     Text("Default mailboxes".uppercased())
@@ -207,7 +207,7 @@ private struct EditDisplayNameView: View {
             .navigationTitle(viewModel.domain.domainName)
             .navigationBarItems(leading: cancelButton, trailing: doneButton)
         }
-        .accentColor(.slPurple)
+        .accentColor(.brand)
         .onAppear {
             displayName = viewModel.domain.name ?? ""
         }
@@ -242,7 +242,7 @@ private struct RandomPrefixSection: View {
     var body: some View {
         Section(content: {
             Toggle("Enabled", isOn: $viewModel.randomPrefixGeneration)
-                .toggleStyle(SwitchToggleStyle(tint: .slPurple))
+                .toggleStyle(SwitchToggleStyle(tint: .brand))
         }, header: {
             Text("Random prefix generation")
         }, footer: {
